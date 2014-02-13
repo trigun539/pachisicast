@@ -1,4 +1,4 @@
-parcheesicast
+Pachisicast
 =============
 
-Parcheesi for Chromecast!
+Pachisi for Chromecast!
