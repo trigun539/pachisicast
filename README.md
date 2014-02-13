@@ -1,4 +1,4 @@
 parcheesicast
 =============
 
-parcheesicast
+Parcheesi for Chromecast!
