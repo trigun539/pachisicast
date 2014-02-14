@@ -1,7 +1,9 @@
 body {
 	overflow:hidden;
+	background-color: white;
+	color: black;
 }
-div {
+/*div {
 	height:720PX;
 	width:1280PX;
 	text-align:center;
@@ -13,4 +15,4 @@ div {
 	font-weight:bold;
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:40px;
-}
+}*/

@@ -1,4 +1,4 @@
-var applicationID = 'A1227254';
+var applicationID = '418A6791';
 var namespace = 'urn:x-cast:com.google.cast.sample.helloworld';
 var session = null;
 
