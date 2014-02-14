@@ -1,0 +1,14 @@
+input {
+  font-family: "Arial", Arial, sans-serif;
+  font-size: 40px;
+  font-weight: bold;	
+}
+.border {
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+}
+.border:focus { 
+    outline: none;
+    border-color: #8ecaed;
+    box-shadow: 0 0 5px #8ecaed;
+}
