@@ -3,23 +3,32 @@ body {
 	background-color: #0984B2;
 	margin: 0px;
 	padding: 0px;
+	width: 100%;
+	text-align:center;
 }
 
 canvas {
 	margin: 0px;
-	padding: 0px;
+	padding: 0px; 
+	margin-top: -700px;  
 }
 
-div {
-	height:720PX;
-	width:1280PX;
+#content { 
 	text-align:center;
-	border:0px solid silver;
-	display: table-cell;
-	vertical-align:middle;
-	color:#FFFFFF;
-	background-color:#0984B2;
-	font-weight:bold;
-	font-family:Verdana, Geneva, sans-serif;
-	font-size:40px;
+}
+
+#gameGraphics
+{
+	width:700px;
+	height:700px;
+	display:block; 
+	margin-top:-700px;
+	margin-left: auto;
+	margin-right: auto;
+	position:relative;
+}
+ 
+#board
+{
+	
 }

@@ -1,55 +1,28 @@
-var GAME_TITLE = 'Pachisicast'; 
-var FPS = 30;
-var WIDTH = 700;
-var HEIGHT = 700;
+ 
+var gameBoard; 
+var gamePieces = new Array();
+var players = new Array();
 
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
 
-setInterval(function() {
-	update();
-	draw();
-}, 1000/FPS);
+function initializeGame()
+{
+	gameBoard = new GameBoard('Pachisi-board.jpg', 700, 700);
 
-var textX = 50;
-var textY = 50;
-
-function update() {
-	textX = WIDTH/2 - 100;
-	textY = 30;
-}
-
-function draw() {
+	players[0] = new Player('bluepiece.png', 1);
+	players[1] = new Player('greenpiece.png', 2);
 	
-	// Game Background
-	ctx.fillStyle = "#149ACC";
-	ctx.rect(0,0,1280,1024);
-	ctx.stroke();
-	ctx.fill();
 
-	// Game Title
-	ctx.fillStyle = "#FFFFFF";
-	ctx.fillText(GAME_TITLE, textX, textY);
 
-	/**
-	 * SCORES
-	 */
-
-	// Player 1
-	ctx.fillStyle = "#FFFFFF";
-	ctx.fillText("1", 10, 10);
-
-	// Player 2
-	ctx.fillStyle = "#FFFFFF";
-	ctx.fillText("2", 500, 10);
-
-	// Player 3
-	ctx.fillStyle = "#FFFFFF";
-	ctx.fillText("3", 10, 500);
-
-	// Player 4
-	ctx.fillStyle = "#FFFFFF";
-	ctx.fillText("4", 500, 500);
-
+	setInterval(function(){
+		 
+		players[0].pieces[0].moveForward(1);
+		players[0].pieces[1].moveForward(2);
+		players[1].pieces[0].moveForward(1);
+		
+		},1000);
 
 }
+
+
+
+
