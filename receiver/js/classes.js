@@ -20,7 +20,7 @@ function Player(PieceSrc, PositionNumber) {
 		}
 		else if(this.positionNum == 2)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -9, 1, this.positionNum);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -16, 1, this.positionNum);
 			this.pieces[1] = new GamePiece(this.pieceSrc, 51, 2, this.positionNum);
 			this.pieces[2] = new GamePiece(this.pieceSrc, 61, 3, this.positionNum);
 			this.pieces[2] = new GamePiece(this.pieceSrc, 1, 4, this.positionNum);
@@ -77,15 +77,17 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID)
 
 		if(LocNum <= -13)  //-16 to -13 = bottom right home base
 		{
-			
+			this.y = 600;
+			this.x = 520 + (LocNum+16)*20;
 		}
 
-		if(LocNum <= -9)   //-12 to -9 = bottom left home base
+		else if(LocNum <= -9)   //-12 to -9 = bottom left home base
 		{
-			
+			this.y = 600;
+			this.x = 100 + (LocNum+12)*20;
 		}
 		
-		if(LocNum <= -5)     //-8 to -5 = top right home base
+		else if(LocNum <= -5)     //-8 to -5 = top right home base
 		{
 			this.y = 100;
 			this.x = 520 + (LocNum+8)*20;
