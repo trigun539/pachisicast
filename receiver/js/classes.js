@@ -4,28 +4,51 @@ function GameBoard(Source, Width, Height) {
     this.height = Height;
 }
 
-function Player(PieceSrc, PositionNumber, BoardHeight) {
+function Player(PieceSrc, PositionNumber, BoardHeight, PlayerName, SenderID) {
 	this.positionNum = PositionNumber;
+	this.senderID = SenderID;
 	this.pieceSrc = PieceSrc;
+	this.playerName = PlayerName;
 	this.pieces = new Array();
+	
+	
+	this.killme = function()
+	{
+		this.pieces[0].removeme();
+		this.pieces[1].removeme();
+		this.pieces[2].removeme();
+		this.pieces[3].removeme();
+	}
 	
 	this.initialize = function()
 	{
 		if(this.positionNum == 1)
 		{
 			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 2, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 3, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 4, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 2)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 2, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 2, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 3, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 4, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 3)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 3, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 2, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 3, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 4, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 4)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 4, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 2, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 3, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 4, this.positionNum, BoardHeight);
 		}
 		
 	}
@@ -45,6 +68,13 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 	this.boardHeight = BoardHeight;
 	this.y=0;
 	this.x=0;
+	 
+	 
+	this.removeme = function()
+	{
+		$("#player" + this.playerID + "piece" + this.id).remove();
+		
+	} 
 	 
 	this.drawme = function()
 	{
@@ -73,12 +103,24 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 	this.moveForward = function(amount)
 	{
 		
+		var goingForward = true; 
+		
 		for(var i=0; i<amount; i++)
 		{
 		
 			if(this.locationNum >= 1)  //must be in play area to move forward
 			{
-				var newLocation = this.locationNum += 1;
+				
+				if(this.locationNum == 77)  //if at the final finishing area spot, but still moving, go backwards
+					goingForward = false;
+					
+				
+				if(goingForward)
+					var newLocation = this.locationNum += 1;
+					
+				else
+					var newLocation = this.locationNum -= 1;
+						 
 				
 				if((this.playerID == 1)&&(this.locationNum == 35))  //entering finishing area 
 					newLocation = 70;
@@ -93,7 +135,7 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 					newLocation = 70;
 				
 				
-				if(newLocation == 69)
+				if(newLocation == 69)  //looping around the board
 					newLocation = 1;
 					 
 					

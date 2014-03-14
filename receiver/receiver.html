@@ -10,6 +10,44 @@
   		<div id="gameGraphics">
   		</div>
 	</div>
+	
+	<div id="lobbyMessage">
+		Waiting for players...
+	</div>
+	
+	<div id="testPanel">
+		<a href="javascript:void(0)" onclick="startGame()">start game</a><br/>
+		<a href="javascript:void(0)" onclick="backToLobby()">to lobby</a><br/>
+		joe join, spot:
+		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '3')">3</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '4')">4</a><br/>
+
+		bob join, spot:
+		<a href="javascript:void(0)" onclick="joinGame('345', 'bobward', 'greenpiece.png', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('345', 'bobward', 'greenpiece.png', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('345', 'bobward', 'greenpiece.png', '3')">3</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('345', 'bobward', 'greenpiece.png', '4')">4</a><br/>		
+		
+		jim join, spot:
+		<a href="javascript:void(0)" onclick="joinGame('456', 'jimmy', 'redpiece.png', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('456', 'jimmy', 'redpiece.png', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('456', 'jimmy', 'redpiece.png', '3')">3</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('456', 'jimmy', 'redpiece.png', '4')">4</a><br/>		
+		
+		sue join, spot:
+		<a href="javascript:void(0)" onclick="joinGame('567', 'sue', 'limepiece.png', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('567', 'sue', 'limepiece.png', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('567', 'sue', 'limepiece.png', '3')">3</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('567', 'sue', 'limepiece.png', '4')">4</a><br/>
+		
+		leave game:
+		<a href="javascript:void(0)" onclick="leaveGame('123')">joe</a>&nbsp;
+		<a href="javascript:void(0)" onclick="leaveGame('345')">bob</a>&nbsp;
+		<a href="javascript:void(0)" onclick="leaveGame('456')">jim</a>&nbsp;
+		<a href="javascript:void(0)" onclick="leaveGame('567')">sue</a><br/>
+	</div>
 
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js" ></script>
 
