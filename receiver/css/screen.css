@@ -1,6 +1,6 @@
 body {
 	overflow:hidden;
-	background-color: #0984B2;
+	background-color: #222222;
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
@@ -15,6 +15,8 @@ canvas {
 
 #content { 
 	text-align:center;
+	width:100%;
+	height:100%; 
 }
 
 #gameGraphics
@@ -29,6 +31,8 @@ canvas {
 }
  
 #board
-{
-	
+{ 
+	height:96%;
+	margin-top:1%;
+	padding:0;
 }

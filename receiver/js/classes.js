@@ -4,7 +4,7 @@ function GameBoard(Source, Width, Height) {
     this.height = Height;
 }
 
-function Player(PieceSrc, PositionNumber) {
+function Player(PieceSrc, PositionNumber, BoardHeight) {
 	this.positionNum = PositionNumber;
 	this.pieceSrc = PieceSrc;
 	this.pieces = new Array();
@@ -13,17 +13,19 @@ function Player(PieceSrc, PositionNumber) {
 	{
 		if(this.positionNum == 1)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, 11, 1, this.positionNum);
-			this.pieces[1] = new GamePiece(this.pieceSrc, 21, 2, this.positionNum);
-			this.pieces[2] = new GamePiece(this.pieceSrc, 31, 3, this.positionNum);
-			this.pieces[2] = new GamePiece(this.pieceSrc, 32, 4, this.positionNum);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 2)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -16, 1, this.positionNum);
-			this.pieces[1] = new GamePiece(this.pieceSrc, 51, 2, this.positionNum);
-			this.pieces[2] = new GamePiece(this.pieceSrc, 61, 3, this.positionNum);
-			this.pieces[2] = new GamePiece(this.pieceSrc, 1, 4, this.positionNum);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 2, this.positionNum, BoardHeight);
+		}
+		else if(this.positionNum == 3)
+		{
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 3, this.positionNum, BoardHeight);
+		}
+		else if(this.positionNum == 4)
+		{
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 4, this.positionNum, BoardHeight);
 		}
 		
 	}
@@ -34,12 +36,13 @@ function Player(PieceSrc, PositionNumber) {
 
 
 
-function GamePiece(ImgSrc, LocNum, Id, PlayerID)
+function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 {
 	this.id = Id;
-	this.playerID = PlayerID;
+	this.playerID = PlayerID;  //1 is top left, 2 is top right, 3 is bottom left, 4 is bottom right
 	this.imgsrc = ImgSrc;
 	this.locationNum;
+	this.boardHeight = BoardHeight;
 	this.y=0;
 	this.x=0;
 	 
@@ -47,7 +50,7 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID)
 	{
 		var elem = document.createElement("img");
 		elem.setAttribute("src", "img/"+this.imgsrc);
-		elem.setAttribute("style", "position:absolute");
+		elem.setAttribute("style", "position:absolute; height:4%");
 		elem.setAttribute("id", "player" + this.playerID + "piece" + this.id);
 		document.getElementById("gameGraphics").appendChild(elem);
 		
@@ -58,10 +61,10 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID)
 		this.x = newX;
 		this.y = newY;
 		
-		$('#player' + this.playerID + "piece" + this.id).delay(1500).animate(
+		$('#player' + this.playerID + "piece" + this.id).animate(
 						  { 'top': newY,
 						    'left': newX, 
-						  }, 800, 'swing');
+						  }, 400, 'swing');
 		
 		//$('#player' + this.playerID + "piece" + this.id).css('top', this.y);
 		//$('#player' + this.playerID + "piece" + this.id).css('left', this.x);
@@ -69,12 +72,55 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID)
 	 
 	this.moveForward = function(amount)
 	{
-		var newLocation = this.locationNum += amount;
 		
-		if(newLocation > 68)
-			newLocation -= 68;
+		for(var i=0; i<amount; i++)
+		{
+		
+			if(this.locationNum >= 1)  //must be in play area to move forward
+			{
+				var newLocation = this.locationNum += 1;
+				
+				if((this.playerID == 1)&&(this.locationNum == 35))  //entering finishing area 
+					newLocation = 70;
+
+				else if((this.playerID == 2)&&(this.locationNum == 18))  //entering finishing area
+					newLocation = 70;
+					
+				else if((this.playerID == 3)&&(this.locationNum == 52))  //entering finishing area
+					newLocation = 70;
+				
+				else if((this.playerID == 4)&&(this.locationNum == 69))  //entering finishing area
+					newLocation = 70;
+				
+				
+				if(newLocation == 69)
+					newLocation = 1;
+					 
+					
+				this.setLocation(newLocation);
+			}
 			
-		this.setLocation(newLocation);
+		}
+	} 
+	 
+	this.enterPlayArea = function()
+	{
+		if(this.playerID == 1)
+		{
+			this.setLocation(39);
+		}
+		else if(this.playerID == 2)
+		{
+			this.setLocation(22);
+		}
+		else if(this.playerID == 3)
+		{
+			this.setLocation(56);
+		}
+		else if(this.playerID == 4)
+		{
+			this.setLocation(5);
+		}				
 	} 
 	 
 	 
@@ -82,29 +128,30 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID)
 	{
 		this.locationNum = LocNum;
 		var newX, newY;
+ 
 
-		if(LocNum <= -13)  //-16 to -13 = bottom right home base
+		if(LocNum <= 0)      //-3 to 0 = pieces at home base/jail    top left home base
 		{
-			newY = 600;
-			newX = 520 + (LocNum+16)*20;
-		}
-
-		else if(LocNum <= -9)   //-12 to -9 = bottom left home base
-		{
-			newY = 600;
-			newX = 100 + (LocNum+12)*20;
-		}
-		
-		else if(LocNum <= -5)     //-8 to -5 = top right home base
-		{
-			newY = 100;
-			newX = 520 + (LocNum+8)*20;
-		}
-
-		else if(LocNum <= -1)      //-4 to -1 = top left home base
-		{
-			newY = 100;
-			newX = 100 + (LocNum+4)*20;
+			if(this.playerID == 1)
+			{
+				newY = 100;
+				newX = 100 + (LocNum+3)*20;
+			}
+			else if(this.playerID == 2)
+			{
+				newY = 100;
+				newX = 520 + (LocNum+3)*20;
+			}
+			else if(this.playerID == 3)
+			{
+				newY = 600;
+				newX = 100 + (LocNum+3)*20;
+			}
+			else if(this.playerID == 4)
+			{
+				newY = 600;
+				newX = 520 + (LocNum+3)*20;
+			}
 		}
 
 		else if(LocNum <= 8)
@@ -168,8 +215,37 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID)
 			newX = 345;
 			newY = 623;
 		}
+		else if(LocNum <= 77)   //70 to 77 are finish area spots
+		{
+			if(this.playerID == 1)
+			{
+				newX = 345;
+				newY = 51 + (LocNum - 69)*28.5;
+			}
+			else if(this.playerID == 2)
+			{
+				newY = 335;
+				newX = 430 + (76 - LocNum)*28.5;
+			}
+			else if(this.playerID == 3)
+			{
+				newY = 335;
+				newX = 60 + (LocNum - 69)*28.5;
+			}
+			else if(this.playerID == 4)
+			{
+				newX = 345;
+				newY = 650 - (LocNum-68)*28.5;
+			}
 
-		newY -= 5;   //bandaid solution
+			
+		}
+ 
+		
+		//-----#### now we will adjust the static numbers based on the game board height, to keep things percentage based 
+		var zoomRatio = this.boardHeight/700;  //since the numbers were originally based on a board height of 700
+		newX = newX * zoomRatio;
+		newY = newY * zoomRatio - 5;
 		
 		this.moveme(newX, newY);
 	} 

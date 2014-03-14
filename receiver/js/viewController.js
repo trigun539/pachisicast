@@ -1,40 +1,11 @@
 
 
-function vc_displayGameBoard()
+function vc_reshapeGraphicsDiv()   //needs to be sized the same as the board
 {
-  var imageObj = new Image();
-
-  imageObj.onload = function() {
-    context.drawImage(imageObj, 0, 0, gameBoard.width, gameBoard.height);
-  };
-  imageObj.src = 'img/' + gameBoard.source;	
+	var boardHeight = $('#board').height();
 	
+	$('#gameGraphics').css('height',boardHeight);
+	$('#gameGraphics').css('width',boardHeight);  //because the board is square
+	$('#gameGraphics').css('margin-top', (boardHeight*-1));  //negative board height
 	
 }
-
-
-
-function vc_displayPieces()
-{
-	
-	
-	
-	
-	
-	var images = new Array();
-	
-	for(i=0; i<gamePieces.length; i++)
-	{ 
-		  images[i] = new Image();
-		  images[i].setX = gamePieces[i].x;
-		  images[i].setY = gamePieces[i].y;
-		  
-		  images[i].onload = function() {
-		    context.drawImage(this, this.setX, this.setY);
-		  };
-		  images[i].src = 'img/' + gamePieces[i].imgsrc;	
-	}
-	
-}
-
-
