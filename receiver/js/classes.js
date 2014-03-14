@@ -53,10 +53,18 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID)
 		
 	} 
 	
-	this.moveme = function()
+	this.moveme = function(newX, newY)
 	{
-		$('#player' + this.playerID + "piece" + this.id).css('top', this.y);
-		$('#player' + this.playerID + "piece" + this.id).css('left', this.x);
+		this.x = newX;
+		this.y = newY;
+		
+		$('#player' + this.playerID + "piece" + this.id).delay(1500).animate(
+						  { 'top': newY,
+						    'left': newX, 
+						  }, 800, 'swing');
+		
+		//$('#player' + this.playerID + "piece" + this.id).css('top', this.y);
+		//$('#player' + this.playerID + "piece" + this.id).css('left', this.x);
 	}
 	 
 	this.moveForward = function(amount)
@@ -73,97 +81,97 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID)
 	this.setLocation = function(LocNum)
 	{
 		this.locationNum = LocNum;
-
+		var newX, newY;
 
 		if(LocNum <= -13)  //-16 to -13 = bottom right home base
 		{
-			this.y = 600;
-			this.x = 520 + (LocNum+16)*20;
+			newY = 600;
+			newX = 520 + (LocNum+16)*20;
 		}
 
 		else if(LocNum <= -9)   //-12 to -9 = bottom left home base
 		{
-			this.y = 600;
-			this.x = 100 + (LocNum+12)*20;
+			newY = 600;
+			newX = 100 + (LocNum+12)*20;
 		}
 		
 		else if(LocNum <= -5)     //-8 to -5 = top right home base
 		{
-			this.y = 100;
-			this.x = 520 + (LocNum+8)*20;
+			newY = 100;
+			newX = 520 + (LocNum+8)*20;
 		}
 
 		else if(LocNum <= -1)      //-4 to -1 = top left home base
 		{
-			this.y = 100;
-			this.x = 100 + (LocNum+4)*20;
+			newY = 100;
+			newX = 100 + (LocNum+4)*20;
 		}
 
 		else if(LocNum <= 8)
 		{
-			this.x = 405;
-			this.y = 650 - (LocNum)*28.5;
+			newX = 405;
+			newY = 650 - (LocNum)*28.5;
 			
 		}
 		else if(LocNum <= 16)
 		{
-			this.y = 400;
-			this.x = 430 + (LocNum - 9)*28.5;
+			newY = 400;
+			newX = 430 + (LocNum - 9)*28.5;
 		}
 		else if(LocNum == 17)
 		{
-			this.x = 630;
-			this.y = 335;
+			newX = 630;
+			newY = 335;
 		}
 		else if(LocNum <= 25)
 		{
-			this.y = 269;
-			this.x = 430 + (25 - LocNum)*28.5;
+			newY = 269;
+			newX = 430 + (25 - LocNum)*28.5;
 		}
 		else if(LocNum <= 33)
 		{
-			this.x = 405;
-			this.y = 51 + (33 - LocNum)*28.5;
+			newX = 405;
+			newY = 51 + (33 - LocNum)*28.5;
 		}
 		else if(LocNum == 34)
 		{
-			this.x = 345;
-			this.y = 51;
+			newX = 345;
+			newY = 51;
 		}
 		else if(LocNum <= 42)
 		{
-			this.x = 279;
-			this.y = 51 + (LocNum - 35)*28.5;
+			newX = 279;
+			newY = 51 + (LocNum - 35)*28.5;
 		}
 		else if(LocNum <= 50)
 		{
-			this.y = 269;
-			this.x = 60 + (50 - LocNum)*28.5;
+			newY = 269;
+			newX = 60 + (50 - LocNum)*28.5;
 		}
 		else if(LocNum == 51)
 		{
-			this.y = 335;
-			this.x = 60;
+			newY = 335;
+			newX = 60;
 		}
 		else if(LocNum <= 59)
 		{
-			this.y = 400;
-			this.x = 60 + (LocNum - 52)*28.5;
+			newY = 400;
+			newX = 60 + (LocNum - 52)*28.5;
 		}
 		else if(LocNum <= 67)
 		{
-			this.x = 279;
-			this.y = 423 + (LocNum - 60)*28.5;
+			newX = 279;
+			newY = 423 + (LocNum - 60)*28.5;
 		}
 		else if(LocNum == 68)
 		{
-			this.x = 345;
-			this.y = 623;
+			newX = 345;
+			newY = 623;
 		}
 
-		this.y -= 5;   //bandaid solution
+		newY -= 5;   //bandaid solution
 		
-		this.moveme();
+		this.moveme(newX, newY);
 	} 
 	
 	this.drawme();
