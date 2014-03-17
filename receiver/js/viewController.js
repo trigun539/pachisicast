@@ -31,3 +31,38 @@ function vc_waitingPlayers()   //shows the lobby screen
 							  
 							  
 }
+
+
+
+function vc_showPlayerName(name, positionNumber, dynBoardHeight)   //shows the name on the board
+{ 
+	$('#p' + positionNumber + 'name').html(name);
+	
+	var dynamicFontSize = dynBoardHeight/33;
+	$('#p' + positionNumber + 'name').css('font-size',dynamicFontSize + 'px'); 
+
+}
+
+function vc_hidePlayerName(positionNumber)
+{
+	$('#p' + positionNumber + 'name').html('');
+}
+
+
+function vc_highlightPlayersTurn(positionNumber)    //highlights the player whose turn it is now
+{
+	$('#p' + positionNumber + 'name').css('color','yellow');
+	
+	if(positionNumber != 1)
+		$('#p1name').css('color','#eeeeee');
+		
+	if(positionNumber != 2)
+		$('#p2name').css('color','#eeeeee');
+		
+	if(positionNumber != 3)
+		$('#p3name').css('color','#eeeeee');
+		
+	if(positionNumber != 4)
+		$('#p4name').css('color','#eeeeee');			
+			
+}

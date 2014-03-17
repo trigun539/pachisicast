@@ -2,6 +2,13 @@ function GameBoard(Source, Width, Height) {
     this.source = Source;
     this.width = Width;
     this.height = Height;
+    
+    this.drawme = function()
+    {
+    	$('#board').attr('src','img/' + this.source);
+    }
+    
+    this.drawme();
 }
 
 function Player(PieceSrc, PositionNumber, BoardHeight, PlayerName, SenderID) {

@@ -6,10 +6,16 @@
   </head>
   <body>
   	<div id="content">
-	  	<img id="board" src="img/Pachisi-board.jpg" />
+	  	<img id="board" />
   		<div id="gameGraphics">
+  			<div id="p1name" class="playerName" ></div>
+  			<div id="p2name" class="playerName" ></div>
+  			<div id="p3name" class="playerName" ></div>
+  			<div id="p4name" class="playerName" ></div>
   		</div>
+  		
 	</div>
+	
 	
 	<div id="lobbyMessage">
 		Waiting for players...
@@ -47,6 +53,114 @@
 		<a href="javascript:void(0)" onclick="leaveGame('345')">bob</a>&nbsp;
 		<a href="javascript:void(0)" onclick="leaveGame('456')">jim</a>&nbsp;
 		<a href="javascript:void(0)" onclick="leaveGame('567')">sue</a><br/>
+		
+		joe enter piece:
+		<a href="javascript:void(0)" onclick="enterPiece('123', '0')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('123', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('123', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('123', '3')">3</a>&nbsp;<br/>
+		
+		bob enter piece:
+		<a href="javascript:void(0)" onclick="enterPiece('345', '0')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('345', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('345', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('345', '3')">3</a>&nbsp;<br/>
+		
+		jim enter piece:
+		<a href="javascript:void(0)" onclick="enterPiece('456', '0')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('456', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('456', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('456', '3')">3</a>&nbsp;<br/>
+		
+		sue enter piece:
+		<a href="javascript:void(0)" onclick="enterPiece('567', '0')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('567', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('567', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="enterPiece('567', '3')">3</a>&nbsp;<br/>
+
+		joe move piece1:
+		<a href="javascript:void(0)" onclick="movePiece('123', '0', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('123', '0', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('123', '0', '4')">4</a>&nbsp;<br/>
+		
+		joe move piece2:
+		<a href="javascript:void(0)" onclick="movePiece('123', '1', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('123', '1', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('123', '1', '4')">4</a>&nbsp;<br/>
+		
+		joe move piece3:
+		<a href="javascript:void(0)" onclick="movePiece('123', '2', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('123', '2', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('123', '2', '4')">4</a>&nbsp;<br/>
+		
+		joe move piece4:
+		<a href="javascript:void(0)" onclick="movePiece('123', '3', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('123', '3', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('123', '3', '4')">4</a>&nbsp;<br/>
+		
+		
+		bob move piece1:
+		<a href="javascript:void(0)" onclick="movePiece('345', '0', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('345', '0', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('345', '0', '4')">4</a>&nbsp;<br/>
+		
+		bob move piece2:
+		<a href="javascript:void(0)" onclick="movePiece('345', '1', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('345', '1', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('345', '1', '4')">4</a>&nbsp;<br/>
+		
+		bob move piece3:
+		<a href="javascript:void(0)" onclick="movePiece('345', '2', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('345', '2', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('345', '2', '4')">4</a>&nbsp;<br/>
+		
+		bob move piece4:
+		<a href="javascript:void(0)" onclick="movePiece('345', '3', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('345', '3', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('345', '3', '4')">4</a>&nbsp;<br/>
+		
+		
+		jim move piece1:
+		<a href="javascript:void(0)" onclick="movePiece('456', '0', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('456', '0', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('456', '0', '4')">4</a>&nbsp;<br/>
+		
+		jim move piece2:
+		<a href="javascript:void(0)" onclick="movePiece('456', '1', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('456', '1', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('456', '1', '4')">4</a>&nbsp;<br/>
+		
+		jim move piece3:
+		<a href="javascript:void(0)" onclick="movePiece('456', '2', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('456', '2', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('456', '2', '4')">4</a>&nbsp;<br/>
+		
+		jim move piece4:
+		<a href="javascript:void(0)" onclick="movePiece('456', '3', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('456', '3', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('456', '3', '4')">4</a>&nbsp;<br/>
+		
+		
+		sue move piece1:
+		<a href="javascript:void(0)" onclick="movePiece('567', '0', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('567', '0', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('567', '0', '4')">4</a>&nbsp;<br/>
+		
+		sue move piece2:
+		<a href="javascript:void(0)" onclick="movePiece('567', '1', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('567', '1', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('567', '1', '4')">4</a>&nbsp;<br/>
+		
+		sue move piece3:
+		<a href="javascript:void(0)" onclick="movePiece('567', '2', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('567', '2', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('567', '2', '4')">4</a>&nbsp;<br/>
+		
+		sue move piece4:
+		<a href="javascript:void(0)" onclick="movePiece('567', '3', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('567', '3', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="movePiece('567', '3', '4')">4</a>&nbsp;<br/>
+		
 	</div>
 
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js" ></script>

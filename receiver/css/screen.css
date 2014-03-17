@@ -62,3 +62,35 @@ canvas {
 	
 }
 
+.playerName
+{
+	position:absolute;
+	background-color:#000000;
+	color: #eeeeee;
+	width:14%;
+	height:3%;	
+}
+
+#p1name
+{
+	top:8.5%;
+	left:11%;
+}
+
+#p2name
+{
+	top:8.5%;
+	right:11%;
+}
+
+#p3name
+{
+	bottom:23%;
+	left:11%;
+}
+
+#p4name
+{
+	bottom:23%;
+	right:11%;
+}

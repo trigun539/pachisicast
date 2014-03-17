@@ -4,13 +4,103 @@ var gamePieces = new Array();
 var players = new Array();
 var playingGame = false;
 var dynamicBoardHeight;
+var currentPlayersTurn;
 
 
 function startGame()
 {
 	vc_playingGame();
 	playingGame = true;
+	randomFirstTurn();
+	
+	vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
 }
+ 
+ 
+function nextPlayersTurn(currentPosition)
+{
+	var newPosition;
+	
+	if(currentPosition == 1)
+		newPosition = 2;
+		
+	else if(currentPosition == 2)
+		newPosition = 4;
+		
+	else if(currentPosition == 3)
+		newPosition = 1;
+		
+	else if(currentPosition == 4)
+		newPosition = 3;
+		
+	var j = -1;
+	
+	for(var i=0; i<players.length; i++)
+	{
+		if(players[i].positionNum  == newPosition)	
+			j = i;
+	}
+	
+	if(j == -1)   //if no players are in the next spot over
+	{
+		nextPlayersTurn(newPosition);
+	}
+	else
+	{
+		currentPlayersTurn = j;
+		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
+	}
+	
+}
+
+
+function enterPiece(senderID, pieceNum)
+{
+	var j;
+	
+	for(var i=0; i<players.length; i++)
+	{
+		if(players[i].senderID == senderID)	
+			j = i;
+	}
+	
+	if((playingGame)&&(currentPlayersTurn == j)&&(players[j].pieces[pieceNum].locationNum < 1))
+	{
+		players[j].pieces[pieceNum].enterPlayArea();
+		nextPlayersTurn(players[currentPlayersTurn].positionNum);
+	}
+}
+
+
+function movePiece(senderID, pieceNum, spaces)
+{
+	var j;
+	
+	for(var i=0; i<players.length; i++)
+	{
+		if(players[i].senderID == senderID)	
+			j = i;
+	}
+	
+	if((playingGame)&&(currentPlayersTurn == j)&&(isValidMove(j,pieceNum,spaces) ))
+	{
+		players[j].pieces[pieceNum].moveForward(spaces);
+		nextPlayersTurn(players[currentPlayersTurn].positionNum);
+	}
+	
+}
+
+
+function isValidMove(playerID, pieceNum, spaces)
+{
+	var returner = true;
+	
+	if(players[playerID].pieces[pieceNum].locationNum < 1)   //if at home base
+		returner = false;
+		
+	return returner;
+}
+
 
 function backToLobby()
 {
@@ -18,27 +108,41 @@ function backToLobby()
 	playingGame = false;
 }
 
+
+function randomFirstTurn()
+{
+	currentPlayersTurn = Math.floor((Math.random()*players.length));
+}
+
+
 function joinGame(senderID, name, pieceSrc, positionNumber)
 {
 	if((!playingGame)&&(!senderIDexists(senderID) )&&(!positionUsed(positionNumber)))
 	{
 		players.push(new Player(pieceSrc, positionNumber, dynamicBoardHeight, name, senderID));
+		vc_showPlayerName(name, positionNumber, dynamicBoardHeight);
 	}
 }
 
 function leaveGame(senderID)
 {
-	var splicer;
 	
-	for(var i=0; i<players.length; i++)
+	if(!playingGame)   //can only leave the game in the lobby
 	{
-		if(players[i].senderID == senderID)	
-			splicer = i;
+		var splicer;
+		
+		for(var i=0; i<players.length; i++)
+		{
+			if(players[i].senderID == senderID)	
+				splicer = i;
+		}
+		
+		
+		vc_hidePlayerName(players[splicer].positionNum);
+		
+		players[splicer].killme();   //remove the pieces from board;
+		players.splice(splicer, 1);
 	}
-	
-	
-	players[splicer].killme();   //remove the pieces from board;
-	players.splice(splicer, 1);
 }
 
 
