@@ -39,10 +39,25 @@ window.onload = function() {
   window.messageBus.onMessage = function(event) {
     console.log('Message [' + event.senderId + ']: ' + event.data);
     // display the message from the sender
-    displayText(event.data);
+    // displayText(event.data);
     // inform all senders on the CastMessageBus of the incoming message event
     // sender message listener will be invoked
     window.messageBus.send(event.senderId, event.data);
+
+    switch (event.data.action){
+      case 'join':
+        console.log('Joining game');
+        joinGame(event.senderId, event.data.data.name, event.data.data.image, event.data.data.position);
+        break;
+      case 'leave':
+        break;
+      case 'enter':
+        break;
+      case 'move':
+        break;
+      default:
+        break;
+    }
   }
 
   // initialize the CastReceiverManager with an application status message
@@ -52,7 +67,6 @@ window.onload = function() {
 
 // utility function to display the text message in the input field
 function displayText(text) {
-  console.log(text);
   document.getElementById("message").innerHTML=text;
   window.castReceiverManager.setApplicationState(text);
 };
