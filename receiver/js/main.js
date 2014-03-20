@@ -46,6 +46,7 @@ window.onload = function() {
 
     switch (event.data.action){
       case 'join':
+        alert('Joinning game: ' + event.data.data.name);
         console.log('Joining game');
         joinGame(event.senderId, event.data.data.name, event.data.data.image, event.data.data.position);
         break;

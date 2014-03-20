@@ -124,15 +124,15 @@ function sendMessage(message) {
  */
 function appendMessage(message) {
   console.log(message);
-  var dw = document.getElementById("debugmessage");
-  dw.innerHTML += '\n' + JSON.stringify(message);
+  // var dw = document.getElementById("debugmessage");
+  // dw.innerHTML += '\n' + JSON.stringify(message);
 };
 
 /**
  * utility function to handle text typed in by user in the input field
  */
 function update() {
-  sendMessage(document.getElementById("input").value);
+  // sendMessage(document.getElementById("input").value);
 }
 
 /**
