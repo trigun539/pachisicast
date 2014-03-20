@@ -126,6 +126,8 @@ function randomFirstTurn()
 
 function joinGame(senderID, name, pieceSrc, positionNumber)
 {
+	// $('#debugMan').html(senderID + name + pieceSrc + positionNumber);
+
 	if((!playingGame)&&(!senderIDexists(senderID) )&&(!positionUsed(positionNumber)))
 	{
 		players.push(new Player(pieceSrc, positionNumber, dynamicBoardHeight, name, senderID));
