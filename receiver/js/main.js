@@ -44,13 +44,17 @@ window.onload = function() {
     // sender message listener will be invoked
     window.messageBus.send(event.senderId, event.data);
 
-    switch (event.data.action){
+    $('#debugMan').html('<h3>Debugging</h3>');
+    $('#debugMan').html(event.senderId +','+ event.data);
+
+    var message = $.parseJSON(event.data);
+
+    switch (message.action){
       case 'join':
-        alert('Joinning game: ' + event.data.data.name);
-        console.log('Joining game');
-        joinGame(event.senderId, event.data.data.name, event.data.data.image, event.data.data.position);
+        joinGame(event.senderId, message.data.name, message.data.img, message.data.position);
         break;
       case 'leave':
+        leaveGame(event.senderId);
         break;
       case 'enter':
         break;
