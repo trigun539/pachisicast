@@ -66,3 +66,43 @@ function vc_highlightPlayersTurn(positionNumber)    //highlights the player whos
 		$('#p4name').css('color','#eeeeee');			
 			
 }
+
+
+function vc_rollDice(number1, number2, position)
+{
+	if(position == 0)
+	{
+		$('#dice1').css('top','10%');
+		$('#dice1').css('right','100%');
+	}
+	else if(position == 1)
+	{
+		$('#dice1').css('top','10%');
+		$('#dice1').css('right','0%');
+	}
+	else if(position == 2)
+	{
+		$('#dice1').css('top','90%');
+		$('#dice1').css('right','100%');
+	}
+	else if(position == 3)
+	{
+		$('#dice1').css('top','90%');
+		$('#dice1').css('right','0%');
+	}		 
+	
+	$('#dice1b').css('display','none'); 
+	$('#dice1').css('display','block');
+	$('#dice1b').attr('src','img/dice2.png');
+	
+	setTimeout( function(){ 
+			$('#dice1b').css('display','block');
+			$('#dice1').css('display','none');
+		}  , 800);		
+	
+		$('#dice1').animate(
+							  { 'top': '45%', 'right':'55%' 
+							  }, 800, 'easeOutCubic');
+							  
+					   
+}

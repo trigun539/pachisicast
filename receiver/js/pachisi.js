@@ -14,6 +14,7 @@ function startGame()
 	randomFirstTurn();
 	
 	vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
+	announce_gameStarted();
 }
  
  
@@ -47,9 +48,17 @@ function nextPlayersTurn(currentPosition)
 	}
 	else
 	{
+		rollDice();
 		currentPlayersTurn = j;
-		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
+		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum); 
 	}
+	
+}
+
+
+function rollDice()
+{
+	vc_rollDice(3, 4, currentPlayersTurn);
 	
 }
 
