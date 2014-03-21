@@ -13,8 +13,11 @@
   			<div id="p3name" class="playerName" ></div>
   			<div id="p4name" class="playerName" ></div>
   			
-  			<img id="dice1" src="img/dice_rotate.gif" />
-  			<img id="dice1b"  />
+  			<img class="dices" id="dice1" src="img/dice_rotate.gif" />
+  			<img class="dices" id="dice1b"  />
+  			<img class="dices" id="dice2" src="img/dice_rotate.gif" />
+  			<img class="dices" id="dice2b"  />  			
+  			
   		</div>
   		
 	</div>
@@ -32,6 +35,7 @@
 	<div id="testPanel">
 		<a href="javascript:void(0)" onclick="startGame()">start game</a><br/>
 		<a href="javascript:void(0)" onclick="backToLobby()">to lobby</a><br/>
+		
 		joe join, spot:
 		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '1')">1</a>&nbsp;
 		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '2')">2</a>&nbsp;
@@ -62,112 +66,91 @@
 		<a href="javascript:void(0)" onclick="leaveGame('456')">jim</a>&nbsp;
 		<a href="javascript:void(0)" onclick="leaveGame('567')">sue</a><br/>
 		
-		joe enter piece:
-		<a href="javascript:void(0)" onclick="enterPiece('123', '0')">0</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('123', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('123', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('123', '3')">3</a>&nbsp;<br/>
+		joe dice1 piece:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '0', '1')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '1', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '2', '1')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '3', '1')">3</a>&nbsp;<br/>
 		
-		bob enter piece:
-		<a href="javascript:void(0)" onclick="enterPiece('345', '0')">0</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('345', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('345', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('345', '3')">3</a>&nbsp;<br/>
+		joe dice2 piece:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '0', '2')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '1', '2')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '2', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '3', '2')">3</a>&nbsp;<br/>	
 		
-		jim enter piece:
-		<a href="javascript:void(0)" onclick="enterPiece('456', '0')">0</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('456', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('456', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('456', '3')">3</a>&nbsp;<br/>
+		joe both dice pc:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '0', '3')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '1', '3')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '2', '3')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('123', '3', '3')">3</a>&nbsp;<br/>		
 		
-		sue enter piece:
-		<a href="javascript:void(0)" onclick="enterPiece('567', '0')">0</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('567', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('567', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="enterPiece('567', '3')">3</a>&nbsp;<br/>
+		bob dice1 piece:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '0', '1')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '1', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '2', '1')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '3', '1')">3</a>&nbsp;<br/>
+		
+		bob dice2 piece:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '0', '2')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '1', '2')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '2', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '3', '2')">3</a>&nbsp;<br/>	
+		
+		bob both dice pc:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '0', '3')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '1', '3')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '2', '3')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('345', '3', '3')">3</a>&nbsp;<br/>			
+		
 
-		joe move piece1:
-		<a href="javascript:void(0)" onclick="movePiece('123', '0', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('123', '0', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('123', '0', '4')">4</a>&nbsp;<br/>
+		jim dice1 piece:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '0', '1')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '1', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '2', '1')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '3', '1')">3</a>&nbsp;<br/>
 		
-		joe move piece2:
-		<a href="javascript:void(0)" onclick="movePiece('123', '1', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('123', '1', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('123', '1', '4')">4</a>&nbsp;<br/>
+		jim dice2 piece:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '0', '2')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '1', '2')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '2', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '3', '2')">3</a>&nbsp;<br/>	
 		
-		joe move piece3:
-		<a href="javascript:void(0)" onclick="movePiece('123', '2', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('123', '2', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('123', '2', '4')">4</a>&nbsp;<br/>
+		jim both dice pc:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '0', '3')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '1', '3')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '2', '3')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('456', '3', '3')">3</a>&nbsp;<br/>		
 		
-		joe move piece4:
-		<a href="javascript:void(0)" onclick="movePiece('123', '3', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('123', '3', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('123', '3', '4')">4</a>&nbsp;<br/>
+		sue dice1 piece:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '0', '1')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '1', '1')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '2', '1')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '3', '1')">3</a>&nbsp;<br/>
 		
+		sue dice2 piece:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '0', '2')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '1', '2')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '2', '2')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '3', '2')">3</a>&nbsp;<br/>	
 		
-		bob move piece1:
-		<a href="javascript:void(0)" onclick="movePiece('345', '0', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('345', '0', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('345', '0', '4')">4</a>&nbsp;<br/>
+		sue both dice pc:  
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '0', '3')">0</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '1', '3')">1</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '2', '3')">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="selectPieceDice('567', '3', '3')">3</a>&nbsp;<br/>							
 		
-		bob move piece2:
-		<a href="javascript:void(0)" onclick="movePiece('345', '1', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('345', '1', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('345', '1', '4')">4</a>&nbsp;<br/>
+		roll dice:
+		<a href="javascript:void(0)" onclick="rollDice('123')">joe</a>&nbsp;
+		<a href="javascript:void(0)" onclick="rollDice('345')">bob</a>&nbsp;
+		<a href="javascript:void(0)" onclick="rollDice('456')">jim</a>&nbsp;
+		<a href="javascript:void(0)" onclick="rollDice('567')">sue</a><br/>
 		
-		bob move piece3:
-		<a href="javascript:void(0)" onclick="movePiece('345', '2', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('345', '2', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('345', '2', '4')">4</a>&nbsp;<br/>
-		
-		bob move piece4:
-		<a href="javascript:void(0)" onclick="movePiece('345', '3', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('345', '3', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('345', '3', '4')">4</a>&nbsp;<br/>
-		
-		
-		jim move piece1:
-		<a href="javascript:void(0)" onclick="movePiece('456', '0', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('456', '0', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('456', '0', '4')">4</a>&nbsp;<br/>
-		
-		jim move piece2:
-		<a href="javascript:void(0)" onclick="movePiece('456', '1', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('456', '1', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('456', '1', '4')">4</a>&nbsp;<br/>
-		
-		jim move piece3:
-		<a href="javascript:void(0)" onclick="movePiece('456', '2', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('456', '2', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('456', '2', '4')">4</a>&nbsp;<br/>
-		
-		jim move piece4:
-		<a href="javascript:void(0)" onclick="movePiece('456', '3', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('456', '3', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('456', '3', '4')">4</a>&nbsp;<br/>
-		
-		
-		sue move piece1:
-		<a href="javascript:void(0)" onclick="movePiece('567', '0', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('567', '0', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('567', '0', '4')">4</a>&nbsp;<br/>
-		
-		sue move piece2:
-		<a href="javascript:void(0)" onclick="movePiece('567', '1', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('567', '1', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('567', '1', '4')">4</a>&nbsp;<br/>
-		
-		sue move piece3:
-		<a href="javascript:void(0)" onclick="movePiece('567', '2', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('567', '2', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('567', '2', '4')">4</a>&nbsp;<br/>
-		
-		sue move piece4:
-		<a href="javascript:void(0)" onclick="movePiece('567', '3', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('567', '3', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="movePiece('567', '3', '4')">4</a>&nbsp;<br/>
+		end turn:
+		<a href="javascript:void(0)" onclick="endTurn('123')">joe</a>&nbsp;
+		<a href="javascript:void(0)" onclick="endTurn('345')">bob</a>&nbsp;
+		<a href="javascript:void(0)" onclick="endTurn('456')">jim</a>&nbsp;
+		<a href="javascript:void(0)" onclick="endTurn('567')">sue</a><br/>
+				
 		
 	</div>
 

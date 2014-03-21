@@ -5,22 +5,32 @@ var players = new Array();
 var playingGame = false;
 var dynamicBoardHeight;
 var currentPlayersTurn;
+var waitingForRoll = false;
+
+var dice = new Array();
+dice[0] = 0;  //0 means inactive, otherwise 1 to 6
+dice[1] = 0; 
 
 
 function startGame()
-{
-	vc_playingGame();
-	playingGame = true;
-	randomFirstTurn();
-	
-	vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
-	announce_gameStarted();
+{ 
+	if(players.length > 1)
+	{
+		vc_playingGame();
+		playingGame = true;
+		waitingForRoll = true;
+		randomFirstTurn();
+		
+		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
+		announce_gameStarted();
+	}
 }
  
  
 function nextPlayersTurn(currentPosition)
 {
 	var newPosition;
+	waitingForRoll = true;
 	
 	if(currentPosition == 1)
 		newPosition = 2;
@@ -47,8 +57,7 @@ function nextPlayersTurn(currentPosition)
 		nextPlayersTurn(newPosition);
 	}
 	else
-	{
-		rollDice();
+	{ 
 		currentPlayersTurn = j;
 		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum); 
 	}
@@ -56,14 +65,90 @@ function nextPlayersTurn(currentPosition)
 }
 
 
-function rollDice()
+function rollDice(senderID)
 {
-	vc_rollDice(3, 4, currentPlayersTurn);
-	
+	if(players[currentPlayersTurn].senderID == senderID)
+	{
+		dice[0] = Math.floor((Math.random()*6 + 1));
+		dice[1] = Math.floor((Math.random()*6 + 1));
+		
+		vc_rollDice(dice[0], dice[1], currentPlayersTurn);
+		
+		waitingForRoll = false;
+	}
 }
 
 
-function enterPiece(senderID, pieceNum)
+function selectPieceDice(senderID, pieceID, diceNum)
+{
+
+	var j;
+	
+	for(var i=0; i<players.length; i++)
+	{
+		if(players[i].senderID == senderID)	
+			j = i;
+	}		
+	
+	
+	var diceNumInt = parseInt(diceNum);
+	var validDice = true;
+	
+	if((dice[0] == 0)&&( (diceNum == '3')||(diceNum == '1') ))
+		validDice = false;
+		
+	if((dice[1] == 0)&&( (diceNum == '3')||(diceNum == '2') ))
+		validDice = false;
+		
+	var spaces;	
+		 
+	if(diceNum == '3')
+		spaces = dice[0] + dice[1];
+		
+	else if(diceNum == '2')
+		spaces = dice[1];
+		
+	else if(diceNum == '1')
+		spaces = dice[0];
+		
+
+	if(validDice)
+	{
+	
+		if((players[j].pieces[pieceID].locationNum <= 0) && (spaces >= 5))  //if at home base, and rolled atleast 5 
+		{
+			enterPiece(senderID, pieceID, diceNum);
+		}
+		
+		else if(players[j].pieces[pieceID].locationNum >= 1)
+		{
+			movePiece(senderID, pieceID, spaces, diceNum);
+		}
+			 
+	}
+}
+
+
+function endTurn(senderID)
+{
+	
+	var j;
+	
+	for(var i=0; i<players.length; i++)
+	{
+		if(players[i].senderID == senderID)	
+			j = i;
+	}			
+	
+	if(currentPlayersTurn == j)
+	{
+		removeDice('3');
+		nextPlayersTurn(players[currentPlayersTurn].positionNum);
+	}
+}
+
+
+function enterPiece(senderID, pieceNum, diceNum)
 {
 	var j;
 	
@@ -73,15 +158,19 @@ function enterPiece(senderID, pieceNum)
 			j = i;
 	}
 	
-	if((playingGame)&&(currentPlayersTurn == j)&&(players[j].pieces[pieceNum].locationNum < 1))
+	if((playingGame)&&(currentPlayersTurn == j)&&(!waitingForRoll)&&(players[j].pieces[pieceNum].locationNum < 1))
 	{
 		players[j].pieces[pieceNum].enterPlayArea();
-		nextPlayersTurn(players[currentPlayersTurn].positionNum);
+		removeDice(diceNum);
+		
+		if((dice[0] == 0)&&(dice[1] == 0))
+			nextPlayersTurn(players[currentPlayersTurn].positionNum);
+		 
 	}
 }
 
 
-function movePiece(senderID, pieceNum, spaces)
+function movePiece(senderID, pieceNum, spaces, diceNum)
 {
 	var j;
 	
@@ -91,12 +180,38 @@ function movePiece(senderID, pieceNum, spaces)
 			j = i;
 	}
 	
-	if((playingGame)&&(currentPlayersTurn == j)&&(isValidMove(j,pieceNum,spaces) ))
+	if((playingGame)&&(currentPlayersTurn == j)&&(!waitingForRoll)&&(isValidMove(j,pieceNum,spaces) ))
 	{
 		players[j].pieces[pieceNum].moveForward(spaces);
-		nextPlayersTurn(players[currentPlayersTurn].positionNum);
+		removeDice(diceNum);
+		
+		if((dice[0] == 0)&&(dice[1] == 0))
+			nextPlayersTurn(players[currentPlayersTurn].positionNum);
+		
 	}
 	
+}
+
+
+function removeDice(diceNum)
+{
+	if(diceNum == '3')
+	{
+		dice[0] = 0;
+		dice[1] = 0;
+		$('#dice1b').css('display','none');
+		$('#dice2b').css('display','none');
+	}
+	else if(diceNum == '2')
+	{
+		dice[1] = 0;
+		$('#dice2b').css('display','none');
+	}
+	else if(diceNum == '1')
+	{
+		dice[0] = 0;
+		$('#dice1b').css('display','none');
+	}
 }
 
 

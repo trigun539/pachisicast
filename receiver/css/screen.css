@@ -117,8 +117,26 @@ canvas {
 #dice1b
 {
 	position:absolute;
-	top:45.5%;
-	right:55.5%;
+	top:44.5%;
+	right:49.5%;
+	width:4%;
+	display:none; 
+}
+ 
+#dice2
+{
+	position:absolute;
+	top:70%;
+	right:0%;
+	width:5%;
+	display:none;
+}
+
+#dice2b
+{
+	position:absolute;
+	top:50.5%;
+	right:45.5%;
 	width:4%;
 	display:none; 
 }

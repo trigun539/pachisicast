@@ -72,28 +72,41 @@ function vc_rollDice(number1, number2, position)
 {
 	if(position == 0)
 	{
-		$('#dice1').css('top','10%');
+		$('#dice1').css('top','0%');
 		$('#dice1').css('right','100%');
+		$('#dice2').css('top','10%');
+		$('#dice2').css('right','100%');
 	}
 	else if(position == 1)
 	{
-		$('#dice1').css('top','10%');
+		$('#dice1').css('top','0%');
 		$('#dice1').css('right','0%');
+		$('#dice2').css('top','10%');
+		$('#dice2').css('right','0%');		
 	}
 	else if(position == 2)
 	{
-		$('#dice1').css('top','90%');
+		$('#dice1').css('top','100%');
 		$('#dice1').css('right','100%');
+		$('#dice2').css('top','90%');
+		$('#dice2').css('right','100%');			
 	}
 	else if(position == 3)
 	{
-		$('#dice1').css('top','90%');
+		$('#dice1').css('top','100%');
 		$('#dice1').css('right','0%');
+		$('#dice2').css('top','90%');
+		$('#dice2').css('right','0%');			
 	}		 
 	
 	$('#dice1b').css('display','none'); 
 	$('#dice1').css('display','block');
-	$('#dice1b').attr('src','img/dice2.png');
+	$('#dice1b').attr('src','img/dice' + number1 + '.png');
+	
+	$('#dice2b').css('display','none'); 
+	$('#dice2').css('display','block');
+	$('#dice2').attr('src','img/dice_rotate.gif');   //we set the src value again so it desyncs frmo the other one
+	$('#dice2b').attr('src','img/dice' + number2 + '.png');
 	
 	setTimeout( function(){ 
 			$('#dice1b').css('display','block');
@@ -101,8 +114,20 @@ function vc_rollDice(number1, number2, position)
 		}  , 800);		
 	
 		$('#dice1').animate(
-							  { 'top': '45%', 'right':'55%' 
+							  { 'top': '44%', 'right':'49%' 
 							  }, 800, 'easeOutCubic');
 							  
+	setTimeout( function(){ 
+		$('#dice2b').css('display','block');
+		$('#dice2').css('display','none');
+	}  , 900);							  
+							  
+							  
+	setTimeout( function(){ 
+			
+		$('#dice2').animate(
+							  { 'top': '50%', 'right':'45%' 
+							  }, 800, 'easeOutCubic');
+		}  , 100);						  
 					   
 }
