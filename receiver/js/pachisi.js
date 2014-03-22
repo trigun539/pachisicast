@@ -18,19 +18,33 @@ function startGame()
 	{
 		vc_playingGame();
 		playingGame = true;
-		waitingForRoll = true;
+		waitingForRoll = true;	
 		randomFirstTurn();
+		try { announce_RollNeeded(players[currentPlayersTurn].senderID); }catch (e) {  }
 		
 		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
 		announce_gameStarted();
 	}
 }
  
+
+function getPlayerIDFromSenderID(SenderID)  //gets the position in the players array [player id] from senderID [device id]
+{
+	var j;
+	
+	for(var i=0; i<players.length; i++)
+	{
+		if(players[i].senderID == SenderID)	
+			j = i;
+	}		
+	
+	return j;
+} 
+ 
  
 function nextPlayersTurn(currentPosition)
 {
 	var newPosition;
-	waitingForRoll = true;
 	
 	if(currentPosition == 1)
 		newPosition = 2;
@@ -58,8 +72,10 @@ function nextPlayersTurn(currentPosition)
 	}
 	else
 	{ 
+		waitingForRoll = true;
 		currentPlayersTurn = j;
 		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum); 
+		try { announce_RollNeeded(players[currentPlayersTurn].senderID); }catch (e) {  }
 	}
 	
 }
@@ -74,21 +90,17 @@ function rollDice(senderID)
 		
 		vc_rollDice(dice[0], dice[1], currentPlayersTurn);
 		
+		try { announce_RollResult(players[currentPlayersTurn].senderID, dice[0], dice[1]); }catch (e) {  }
 		waitingForRoll = false;
 	}
 }
 
 
-function selectPieceDice(senderID, pieceID, diceNum)
-{
 
-	var j;
+function selectPieceDice(senderID, pieceID, diceNum)
+{	
 	
-	for(var i=0; i<players.length; i++)
-	{
-		if(players[i].senderID == senderID)	
-			j = i;
-	}		
+	var j = getPlayerIDFromSenderID(senderID);
 	
 	
 	var diceNumInt = parseInt(diceNum);
@@ -132,13 +144,7 @@ function selectPieceDice(senderID, pieceID, diceNum)
 function endTurn(senderID)
 {
 	
-	var j;
-	
-	for(var i=0; i<players.length; i++)
-	{
-		if(players[i].senderID == senderID)	
-			j = i;
-	}			
+	var j = getPlayerIDFromSenderID(senderID);	
 	
 	if(currentPlayersTurn == j)
 	{
@@ -150,13 +156,7 @@ function endTurn(senderID)
 
 function enterPiece(senderID, pieceNum, diceNum)
 {
-	var j;
-	
-	for(var i=0; i<players.length; i++)
-	{
-		if(players[i].senderID == senderID)	
-			j = i;
-	}
+	var j = getPlayerIDFromSenderID(senderID);
 	
 	if((playingGame)&&(currentPlayersTurn == j)&&(!waitingForRoll)&&(players[j].pieces[pieceNum].locationNum < 1))
 	{
@@ -172,13 +172,7 @@ function enterPiece(senderID, pieceNum, diceNum)
 
 function movePiece(senderID, pieceNum, spaces, diceNum)
 {
-	var j;
-	
-	for(var i=0; i<players.length; i++)
-	{
-		if(players[i].senderID == senderID)	
-			j = i;
-	}
+	var j = getPlayerIDFromSenderID(senderID);
 	
 	if((playingGame)&&(currentPlayersTurn == j)&&(!waitingForRoll)&&(isValidMove(j,pieceNum,spaces) ))
 	{
@@ -254,14 +248,8 @@ function leaveGame(senderID)
 {
 	
 	if(!playingGame)   //can only leave the game in the lobby
-	{
-		var splicer;
-		
-		for(var i=0; i<players.length; i++)
-		{
-			if(players[i].senderID == senderID)	
-				splicer = i;
-		}
+	{ 
+		var splicer = getPlayerIDFromSenderID(senderID);
 		
 		
 		vc_hidePlayerName(players[splicer].positionNum);
