@@ -78,6 +78,16 @@ function sessionUpdateListener(isAlive) {
  */
 function receiverMessage(namespace, message) {
   appendMessage("receiverMessage: "+namespace+", "+message);
+
+  var message = $.parseJSON(event.data);
+
+  switch (message.action){
+    case 'myTurn':
+      Pachisicast.myTurn();
+      break;
+    default:
+      break;
+  }
 };
 
 /**
