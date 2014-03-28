@@ -77,6 +77,14 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 	this.x=0;
 	 
 	 
+	this.goToJail = function()
+	{
+		var newPos = this.id - 4;
+		 
+		this.setLocation(newPos); 
+	} 
+	 
+	 
 	this.removeme = function()
 	{
 		$("#player" + this.playerID + "piece" + this.id).remove();
@@ -109,7 +117,7 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 	 
 	this.moveForward = function(amount)
 	{
-		
+ 
 		var goingForward = true; 
 		
 		for(var i=0; i<amount; i++)
@@ -150,6 +158,9 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 			}
 			
 		}
+		
+		setTimeout(checkForCollisions, (amount*400), this.locationNum, this.playerID);  //checks for collisions after the piece stops moving, which is 400ms times the number of spaces time after this
+				
 	} 
 	 
 	this.enterPlayArea = function()

@@ -6,6 +6,7 @@ var playingGame = false;
 var dynamicBoardHeight;
 var currentPlayersTurn;
 var waitingForRoll = false;
+var rolledDoubles = false;
 
 var dice = new Array();
 dice[0] = 0;  //0 means inactive, otherwise 1 to 6
@@ -42,21 +43,46 @@ function getPlayerIDFromSenderID(SenderID)  //gets the position in the players a
 } 
  
  
+function noPiecesInJail()
+{
+	var returner = true;
+	
+	for(i=0; i<4; i++)
+	{
+		if(players[currentPlayersTurn].pieces[i].positionNum < 1)
+			returner = false
+	}
+	
+	return returner;
+} 
+ 
+ 
+ 
 function nextPlayersTurn(currentPosition)
 {
 	var newPosition;
 	
-	if(currentPosition == 1)
-		newPosition = 2;
+	if((rolledDoubles)&&(!noPiecesInJail()))	
+		newPosition = currentPosition;	
 		
-	else if(currentPosition == 2)
-		newPosition = 4;
+	else if((rolledDoubles)&&(noPiecesInJail()))		
+		newPosition = currentPosition;	 //console.log('this function needs to be done later');
 		
-	else if(currentPosition == 3)
-		newPosition = 1;
-		
-	else if(currentPosition == 4)
-		newPosition = 3;
+	else
+	{ 
+		if(currentPosition == 1)
+			newPosition = 2;
+			
+		else if(currentPosition == 2)
+			newPosition = 4;
+			
+		else if(currentPosition == 3)
+			newPosition = 1;
+			
+		else if(currentPosition == 4)
+			newPosition = 3;
+	}	
+
 		
 	var j = -1;
 	
@@ -83,10 +109,12 @@ function nextPlayersTurn(currentPosition)
 
 function rollDice(senderID)
 {
-	if(players[currentPlayersTurn].senderID == senderID)
+	if((players[currentPlayersTurn].senderID == senderID)&&(waitingForRoll))
 	{
 		dice[0] = Math.floor((Math.random()*6 + 1));
 		dice[1] = Math.floor((Math.random()*6 + 1));
+		
+		rolledDoubles = (dice[0] == dice[1])? true:false;
 		
 		vc_rollDice(dice[0], dice[1], currentPlayersTurn);
 		
@@ -153,6 +181,41 @@ function endTurn(senderID)
 	}
 }
 
+function checkForCollisions(locationNum, playerID)
+{
+
+	if((locationNum == 22)&&(playerID != 2))	
+		console.log('safe zone');
+		
+	else if((locationNum == 39)&&(playerID != 1))	
+		console.log('safe zone');
+		
+	else if((locationNum == 56)&&(playerID != 3))	
+		console.log('safe zone');
+		
+	else if((locationNum == 5)&&(playerID != 4))	
+		console.log('safe zone');
+		
+	else
+	{	
+
+		for(var i=0; i<players.length; i++)
+		{
+			if(players[i].positionNum != playerID)
+			{     
+				for(j=0; j<4; j++)
+				{      
+					if(players[i].pieces[j].locationNum == locationNum)
+						players[i].pieces[j].goToJail();
+				}	
+			}
+		}	
+	
+	}	
+	
+}
+
+
 
 function enterPiece(senderID, pieceNum, diceNum)
 {
@@ -164,7 +227,10 @@ function enterPiece(senderID, pieceNum, diceNum)
 		removeDice(diceNum);
 		
 		if((dice[0] == 0)&&(dice[1] == 0))
+		{
 			nextPlayersTurn(players[currentPlayersTurn].positionNum);
+		}
+			
 		 
 	}
 }
