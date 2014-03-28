@@ -53,12 +53,16 @@ window.onload = function() {
       case 'join':
         joinGame(event.senderId, message.data.name, message.data.img, message.data.position);
         break;
+      case 'move':
+        selectPieceDice(event.senderId, message.data.pieceId, message.data.diceNum);
       case 'leave':
         leaveGame(event.senderId);
         break;
-      case 'enter':
+      case 'start':
+        startGame();
         break;
-      case 'move':
+      case 'roll':
+        rollDice(event.senderId);
         break;
       default:
         break;
@@ -75,3 +79,9 @@ function displayText(text) {
   document.getElementById("message").innerHTML=text;
   window.castReceiverManager.setApplicationState(text);
 };
+
+function announce_RollNeeded(senderID){
+  window.messageBus.send(senderID, {
+    action: 'myTurn'
+  });
+}
