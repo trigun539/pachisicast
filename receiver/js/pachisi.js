@@ -6,11 +6,7 @@ var playingGame = false;
 var dynamicBoardHeight;
 var currentPlayersTurn;
 var waitingForRoll = false;
-<<<<<<< HEAD
 var rolledDoubles = false;
-=======
-var callVariable = 'Default';
->>>>>>> b4c289b24bc22ebce57ce2d18dda4b35c8368a86
 
 var dice = new Array();
 dice[0] = 0;  //0 means inactive, otherwise 1 to 6
@@ -19,8 +15,8 @@ dice[1] = 0;
 
 function startGame()
 { 
-	// if(players.length > 1)
-	// {
+	if(players.length > 1)
+	{
 		vc_playingGame();
 		playingGame = true;
 		waitingForRoll = true;	
@@ -29,7 +25,7 @@ function startGame()
 		
 		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
 		announce_gameStarted();
-	// }
+	}
 }
  
 
@@ -66,7 +62,6 @@ function nextPlayersTurn(currentPosition)
 {
 	var newPosition;
 	
-<<<<<<< HEAD
 	if((rolledDoubles)&&(!noPiecesInJail()))	
 		newPosition = currentPosition;	
 		
@@ -88,39 +83,26 @@ function nextPlayersTurn(currentPosition)
 			newPosition = 3;
 	}	
 
-=======
-	// if(currentPosition == 1)
-	// 	newPosition = 2;
 		
-	// else if(currentPosition == 2)
-	// 	newPosition = 4;
-		
-	// else if(currentPosition == 3)
-	// 	newPosition = 1;
-		
-	// else if(currentPosition == 4)
-	// 	newPosition = 3;
->>>>>>> b4c289b24bc22ebce57ce2d18dda4b35c8368a86
-		
-	// var j = -1;
+	var j = -1;
 	
-	// for(var i=0; i<players.length; i++)
-	// {
-	// 	if(players[i].positionNum  == newPosition)	
-	// 		j = i;
-	// }
+	for(var i=0; i<players.length; i++)
+	{
+		if(players[i].positionNum  == newPosition)	
+			j = i;
+	}
 	
-	// if(j == -1)   //if no players are in the next spot over
-	// {
-	// 	nextPlayersTurn(newPosition);
-	// }
-	// else
-	// { 
+	if(j == -1)   //if no players are in the next spot over
+	{
+		nextPlayersTurn(newPosition);
+	}
+	else
+	{ 
 		waitingForRoll = true;
-		// currentPlayersTurn = j;
+		currentPlayersTurn = j;
 		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum); 
 		try { announce_RollNeeded(players[currentPlayersTurn].senderID); }catch (e) {  }
-	// }
+	}
 	
 }
 
@@ -186,7 +168,7 @@ function selectPieceDice(senderID, pieceID, diceNum)
 	}
 }
 
-
+ 
 function endTurn(senderID)
 {
 	
