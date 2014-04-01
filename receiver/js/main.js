@@ -1,3 +1,5 @@
+var players = [];
+
 window.onload = function() {
   cast.receiver.logger.setLevelValue(0);
   window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
@@ -51,6 +53,10 @@ window.onload = function() {
 
     switch (message.action){
       case 'join':
+        players.push({
+          senderId: event.senderId,
+          name: message.data.name
+        });
         joinGame(event.senderId, message.data.name, message.data.img, message.data.position);
         break;
       case 'move':
