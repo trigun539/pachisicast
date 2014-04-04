@@ -1,66 +1,53 @@
-var players = [];
+/**
+ * Pachisicast connector library
+ */
+
+window.Pachisi = {};
+window.Pachisi.PROTOCOL = 'urn:x-cast:com.edwinmike.pachisicast';
+window.Pachisi.Players = [];
 
 window.onload = function() {
   cast.receiver.logger.setLevelValue(0);
-  window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
-  console.log('Starting Receiver Manager');
   
-  // handler for the 'ready' event
-  castReceiverManager.onReady = function(event) {
-    console.log('Received Ready event: ' + JSON.stringify(event.data));
-    window.castReceiverManager.setApplicationState("Application status is ready...");
-  };
-  
-  // handler for 'senderconnected' event
-  castReceiverManager.onSenderConnected = function(event) {
-    console.log('Sender connected: ', event);
-    console.log('Received Sender Connected event: ' + event.data);
-    console.log(window.castReceiverManager.getSender(event.data).userAgent);
-  };
-  
-  // handler for 'senderdisconnected' event
-  castReceiverManager.onSenderDisconnected = function(event) {
-    console.log('Received Sender Disconnected event: ' + event.data);
-    if (window.castReceiverManager.getSenders().length == 0) {
-    window.close();
-  }
-  };
-  
-  // handler for 'systemvolumechanged' event
-  castReceiverManager.onSystemVolumeChanged = function(event) {
-    console.log('Received System Volume Changed event: ' + event.data['level'] + ' ' +
-        event.data['muted']);
-  };
+  /**
+   * Initialize
+   */
 
+  console.log('************* Pachisicast *************');
+
+  // Cast receiver manager
+  window.Pachisi.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+  
   // create a CastMessageBus to handle messages for a custom namespace
-  window.messageBus =
-    window.castReceiverManager.getCastMessageBus(
-        'urn:x-cast:com.google.cast.sample.helloworld');
+  window.Pachisi.messageBus = window.Pachisi.castReceiverManager.getCastMessageBus(window.Pachisi.PROTOCOL,
+    cast.receiver.CastMessageBus.MessageType.JSON);
 
+  /**
+   * Event Listeners
+   */
+
+  // handler for the 'ready' event
+  window.Pachisi.castReceiverManager.onReady = function(event) {
+    console.log('Received Ready event');
+    window.Pachisi.castReceiverManager.setApplicationState("Application is Ready");
+  };
+  
   // handler for the CastMessageBus message event
-  window.messageBus.onMessage = function(event) {
-    console.log('Message [' + event.senderId + ']: ' + event.data);
-    // display the message from the sender
-    // displayText(event.data);
-    // inform all senders on the CastMessageBus of the incoming message event
-    // sender message listener will be invoked
-    window.messageBus.send(event.senderId, event.data);
-
+  window.Pachisi.messageBus.onMessage = function(event) {
     $('#debugMan').html('<h3>Debugging</h3>');
-    $('#debugMan').html(event.senderId +','+ event.data);
 
-    var message = $.parseJSON(event.data);
-
-    switch (message.action){
+    switch (event.data.action){
       case 'join':
-        players.push({
+        window.Pachisi.Players.push({
           senderId: event.senderId,
-          name: message.data.name
+          name: event.data.data.name
         });
-        joinGame(event.senderId, message.data.name, message.data.img, message.data.position);
+        joinGame(event.senderId, event.data.data.name, event.data.data.img, event.data.data.position);
+        window.Pachisi.messageBus.send(event.senderId, 'joined game');
+        console.log(window.Pachisi.Players);
         break;
       case 'move':
-        selectPieceDice(event.senderId, message.data.pieceId, message.data.diceNum);
+        selectPieceDice(event.senderId, event.data.pieceId, event.data.diceNum);
       case 'leave':
         leaveGame(event.senderId);
         break;
@@ -74,20 +61,20 @@ window.onload = function() {
         break;
     }
   }
-
+  
+  // handler for 'senderconnected' event
+  window.Pachisi.castReceiverManager.onSenderConnected = function(event) {
+    console.log('Sender connected: ', event);
+  };
+  
+  // handler for 'senderdisconnected' event
+  window.Pachisi.castReceiverManager.onSenderDisconnected = function(event) {
+    console.log('Received Sender Disconnected event: ' + event.data);
+    if (window.castReceiverManager.getSenders().length == 0) {
+      window.close();
+    }
+  };
+  
   // initialize the CastReceiverManager with an application status message
-  window.castReceiverManager.start({statusText: "Application is starting"});
-  console.log('Receiver Manager started');
+  window.Pachisi.castReceiverManager.start();
 };
-
-// utility function to display the text message in the input field
-function displayText(text) {
-  document.getElementById("message").innerHTML=text;
-  window.castReceiverManager.setApplicationState(text);
-};
-
-function announce_RollNeeded(senderID){
-  window.messageBus.send(senderID, {
-    action: 'myTurn'
-  });
-}
