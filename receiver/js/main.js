@@ -47,7 +47,7 @@ window.onload = function() {
         console.log(window.Pachisi.Players);
         break;
       case 'move':
-        selectPieceDice(event.senderId, event.data.pieceId, event.data.diceNum);
+        selectPieceDice(event.senderId, event.data.data.pieceId, event.data.data.diceNum);
       case 'leave':
         leaveGame(event.senderId);
         break;
@@ -78,3 +78,27 @@ window.onload = function() {
   // initialize the CastReceiverManager with an application status message
   window.Pachisi.castReceiverManager.start();
 };
+
+// Announce roll needed: senderId
+// parameters: players[currentPlayersTurn].senderID
+function announce_RollNeeded(senderId){
+  window.Pachisi.messageBus.send(senderId, {action: 'roll'});
+};
+
+// Game started: all people get this message
+// No parameters
+
+function announce_gameStarted(){
+  window.Pachisi.messageBus.broadcast('started');
+}
+
+// Announce roll result: senderId
+// players[currentPlayersTurn].senderID, dice[0], dice[1]
+
+function announce_RollResult(senderId, dice1, dice2){
+  window.Pachisi.messageBus.send(senderId, {
+    action: 'rollResult',
+    dice1: dice1,
+    dice2: dice2
+  });
+}

@@ -72,7 +72,7 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 	this.playerID = PlayerID;  //1 is top left, 2 is top right, 3 is bottom left, 4 is bottom right
 	this.imgsrc = ImgSrc;
 	this.locationNum;
-	this.boardHeight = BoardHeight;
+	this.boardHeight = BoardHeight; // Could be a constant
 	this.y=0;
 	this.x=0;
 	 
@@ -314,7 +314,3 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 	this.setLocation(LocNum); 
 	
 }
-
-
-
- 
