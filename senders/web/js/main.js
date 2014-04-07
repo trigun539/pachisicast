@@ -79,13 +79,13 @@ function sessionUpdateListener(isAlive) {
 function receiverMessage(namespace, message) {
   console.log('Receiver Message: ', message);
 
-  // switch (message.action){
-  //   case 'myTurn':
-  //     Pachisicast.myTurn();
-  //     break;
-  //   default:
-  //     break;
-  // }
+  switch (message.action){
+    case 'roll':
+      rollNeeded();
+      break;
+    default:
+      break;
+  }
 };
 
 /**
@@ -124,4 +124,9 @@ function sendMessage(message) {
         session.sendMessage(namespace, message, onSuccess.bind(this, "Message sent: " + message), onError);
       }, onError);
   }
+}
+
+// Roll Function
+function rollNeeded(){
+  console.log('Its my turn');
 }
