@@ -1,5 +1,5 @@
 var applicationID = '418A6791';
-var namespace = 'urn:x-cast:com.google.cast.sample.helloworld';
+var namespace = 'urn:x-cast:com.edwinmike.pachisicast';
 var session = null;
 
 /**
@@ -25,35 +25,35 @@ function initializeCastApi() {
  * initialization success callback
  */
 function onInitSuccess() {
-  appendMessage("onInitSuccess");
+  console.log("onInitSuccess");
 }
 
 /**
  * initialization error callback
  */
 function onError(message) {
-  appendMessage("onError: "+JSON.stringify(message));
+  console.log("onError: ", message);
 }
 
 /**
  * generic success callback
  */
 function onSuccess(message) {
-  appendMessage("onSuccess: "+message);
+  console.log('onSuccess: ', message);
 }
 
 /**
  * callback on success for stopping app
  */
 function onStopAppSuccess() {
-  appendMessage('onStopAppSuccess');
+  console.log('onStopAppSuccess');
 }
 
 /**
  * session listener during initialization
  */
 function sessionListener(e) {
-  appendMessage('New session ID:' + e.sessionId);
+  console.log('sessionListener:', e);
   session = e;
   session.addUpdateListener(sessionUpdateListener);  
   session.addMessageListener(namespace, receiverMessage);
@@ -65,7 +65,7 @@ function sessionListener(e) {
 function sessionUpdateListener(isAlive) {
   var message = isAlive ? 'Session Updated' : 'Session Removed';
   message += ': ' + session.sessionId;
-  appendMessage(message);
+  console.log(message);
   if (!isAlive) {
     session = null;
   }
@@ -77,13 +77,11 @@ function sessionUpdateListener(isAlive) {
  * @param {string} message A message string
  */
 function receiverMessage(namespace, message) {
-  appendMessage("receiverMessage: "+namespace+", "+message);
-
-  var message = $.parseJSON(event.data);
+  console.log('Receiver Message: ', message);
 
   switch (message.action){
-    case 'myTurn':
-      Pachisicast.myTurn();
+    case 'roll':
+      rollNeeded();
       break;
     default:
       break;
@@ -95,10 +93,10 @@ function receiverMessage(namespace, message) {
  */
 function receiverListener(e) {
   if( e === 'available' ) {
-    appendMessage("receiver found");
+    console.log("receiver found");
   }
   else {
-    appendMessage("receiver list empty");
+    console.log("receiver list empty");
   }
 }
 
@@ -128,27 +126,7 @@ function sendMessage(message) {
   }
 }
 
-/**
- * append message to debug message window
- * @param {string} message A message string
- */
-function appendMessage(message) {
-  console.log(message);
-  // var dw = document.getElementById("debugmessage");
-  // dw.innerHTML += '\n' + JSON.stringify(message);
-};
-
-/**
- * utility function to handle text typed in by user in the input field
- */
-function update() {
-  // sendMessage(document.getElementById("input").value);
-}
-
-/**
- * handler for the transcribed text from the speech input
- * @param {string} words A transcibed speech string
- */
-function transcribe(words) {
-  sendMessage(words);
+// Roll Function
+function rollNeeded(){
+  console.log('Its my turn');
 }
