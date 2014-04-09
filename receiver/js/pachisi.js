@@ -180,20 +180,34 @@ function endTurn(senderID)
 		nextPlayersTurn(players[currentPlayersTurn].positionNum);
 	}
 }
+ 
+ 
+function releaseBarrier(locationNum)  //releases any barriers at this location
+{
+	for(var i=0; i<players.length; i++)
+	{  
+		for(j=0; j<4; j++)
+		{      
+			if(players[i].pieces[j].locationNum == locationNum)
+				players[i].pieces[j].isBarrier = false;
+		}	 
+	}
+} 
+ 
 
-function checkForCollisions(locationNum, playerID)
+function checkForCollisions(locationNum, baseID, pieceID)
 {
 
-	if((locationNum == 22)&&(playerID != 2))	
+	if((locationNum == 22)&&(baseID != 2))	
 		console.log('safe zone');
 		
-	else if((locationNum == 39)&&(playerID != 1))	
+	else if((locationNum == 39)&&(baseID != 1))	
 		console.log('safe zone');
 		
-	else if((locationNum == 56)&&(playerID != 3))	
+	else if((locationNum == 56)&&(baseID != 3))	
 		console.log('safe zone');
 		
-	else if((locationNum == 5)&&(playerID != 4))	
+	else if((locationNum == 5)&&(baseID != 4))	
 		console.log('safe zone');
 		
 	else
@@ -201,12 +215,23 @@ function checkForCollisions(locationNum, playerID)
 
 		for(var i=0; i<players.length; i++)
 		{
-			if(players[i].positionNum != playerID)
+			if(players[i].positionNum != baseID)
 			{     
 				for(j=0; j<4; j++)
 				{      
 					if(players[i].pieces[j].locationNum == locationNum)
 						players[i].pieces[j].goToJail();
+				}	
+			}
+			else
+			{
+				for(j=0; j<4; j++)
+				{   
+					//alert(players[i].pieces[j].locationNum + '-' + locationNum + '=' + pieceID + '-' + j);
+					   
+					if((players[i].pieces[j].locationNum == locationNum)&&(pieceID != j))  //if there is a barrier of pieces now
+						players[i].makeBarrier(pieceID, j);
+					
 				}	
 			}
 		}	
@@ -242,8 +267,9 @@ function movePiece(senderID, pieceNum, spaces, diceNum)
 	
 	if((playingGame)&&(currentPlayersTurn == j)&&(!waitingForRoll)&&(isValidMove(j,pieceNum,spaces) ))
 	{
+		releaseBarrier(players[j].pieces[pieceNum].locationNum);
 		players[j].pieces[pieceNum].moveForward(spaces);
-		removeDice(diceNum);
+		removeDice(diceNum);  
 		
 		if((dice[0] == 0)&&(dice[1] == 0))
 			nextPlayersTurn(players[currentPlayersTurn].positionNum);
@@ -282,6 +308,56 @@ function isValidMove(playerID, pieceNum, spaces)
 	if(players[playerID].pieces[pieceNum].locationNum < 1)   //if at home base
 		returner = false;
 		
+		
+		//check for barriers \/
+	var spacesleft = spaces;	
+	var currentpos = players[playerID].pieces[pieceNum].locationNum;
+	
+	while(spacesleft > 0)
+	{
+		spacesleft --;
+		currentpos++;
+		
+		if((players[playerID].baseID == 1)&&(currentpos == 35))  //entering finishing area 
+			spacesleft = 0;
+
+		else if((players[playerID].baseID == 2)&&(currentpos == 18))  //entering finishing area
+			spacesleft = 0;
+			
+		else if((players[playerID].baseID == 3)&&(currentpos == 52))  //entering finishing area
+			spacesleft = 0;
+		
+		else if((players[playerID].baseID == 4)&&(currentpos == 69))  //entering finishing area
+			spacesleft = 0;
+		
+		else
+		{
+			if(currentpos == 69)
+				currentpos = 1;
+
+			if(isBarrierHere(currentpos))
+				returner = false;
+		} 
+	}
+		
+	return returner;
+}
+
+
+function isBarrierHere(locationNum)  //returns the ID of the player at this location [if any], otherwise false
+{
+	var returner = false; 
+	
+	for(var i=0; i<players.length; i++)
+	{
+		for(var j=0; j<4; j++)
+		{
+			if((players[i].pieces[j].isBarrier)&&(players[i].pieces[j].locationNum == locationNum))
+				returner = true;
+				 
+		} 
+	}		
+	
 	return returner;
 }
 

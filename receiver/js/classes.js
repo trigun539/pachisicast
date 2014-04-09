@@ -19,6 +19,13 @@ function Player(PieceSrc, PositionNumber, BoardHeight, PlayerName, SenderID) {
 	this.pieces = new Array();
 	
 	
+	
+	this.makeBarrier = function(pieceID1, pieceID2)
+	{   
+		this.pieces[pieceID1].makeBarrier(true);
+		this.pieces[pieceID2].makeBarrier(false);
+	}
+	
 	this.killme = function()
 	{
 		this.pieces[0].removeme();
@@ -31,31 +38,31 @@ function Player(PieceSrc, PositionNumber, BoardHeight, PlayerName, SenderID) {
 	{
 		if(this.positionNum == 1)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
-			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 2, this.positionNum, BoardHeight);
-			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 3, this.positionNum, BoardHeight);
-			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 4, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 0, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 1, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 2, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 3, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 2)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
-			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 2, this.positionNum, BoardHeight);
-			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 3, this.positionNum, BoardHeight);
-			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 4, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 0, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 1, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 2, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 3, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 3)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
-			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 2, this.positionNum, BoardHeight);
-			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 3, this.positionNum, BoardHeight);
-			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 4, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 0, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 1, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 2, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 3, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 4)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 1, this.positionNum, BoardHeight);
-			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 2, this.positionNum, BoardHeight);
-			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 3, this.positionNum, BoardHeight);
-			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 4, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 0, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 1, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 2, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 3, this.positionNum, BoardHeight);
 		}
 		
 	}
@@ -66,15 +73,43 @@ function Player(PieceSrc, PositionNumber, BoardHeight, PlayerName, SenderID) {
 
 
 
-function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
+function GamePiece(ImgSrc, LocNum, Id, BaseID, BoardHeight)
 {
 	this.id = Id;
-	this.playerID = PlayerID;  //1 is top left, 2 is top right, 3 is bottom left, 4 is bottom right
+	this.baseID = BaseID;  //1 is top left, 2 is top right, 3 is bottom left, 4 is bottom right
 	this.imgsrc = ImgSrc;
 	this.locationNum;
 	this.boardHeight = BoardHeight;
 	this.y=0;
 	this.x=0;
+	this.isBarrier = false; 
+	 
+	this.makeBarrier = function(isLeftSide)
+	{
+		
+		this.isBarrier = true; 
+		
+		var horizontal = true;
+		
+		if((this.locationNum >= 9)&&(this.locationNum <= 25))
+			horizontal = false;
+			
+		if((this.locationNum >= 43)&&(this.locationNum <= 59))
+			horizontal = false;
+			
+		if((horizontal)&&(isLeftSide))
+			this.moveme(this.x - (this.boardHeight * .02), this.y);
+			
+		if((horizontal)&&(!isLeftSide))
+			this.moveme(this.x + (this.boardHeight * .02), this.y);
+			
+		if((!horizontal)&&(isLeftSide))
+			this.moveme(this.x, this.y - (this.boardHeight * .02));
+			
+		if((!horizontal)&&(!isLeftSide))
+			this.moveme(this.x, this.y + (this.boardHeight * .02));			
+			
+	} 
 	 
 	 
 	this.goToJail = function()
@@ -87,7 +122,7 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 	 
 	this.removeme = function()
 	{
-		$("#player" + this.playerID + "piece" + this.id).remove();
+		$("#player" + this.baseID + "piece" + this.id).remove();
 		
 	} 
 	 
@@ -96,7 +131,7 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 		var elem = document.createElement("img");
 		elem.setAttribute("src", "img/"+this.imgsrc);
 		elem.setAttribute("style", "position:absolute; height:4%");
-		elem.setAttribute("id", "player" + this.playerID + "piece" + this.id);
+		elem.setAttribute("id", "player" + this.baseID + "piece" + this.id);
 		document.getElementById("gameGraphics").appendChild(elem);
 		
 	} 
@@ -106,7 +141,7 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 		this.x = newX;
 		this.y = newY;
 		
-		$('#player' + this.playerID + "piece" + this.id).animate(
+		$('#player' + this.baseID + "piece" + this.id).animate(
 						  { 'top': newY,
 						    'left': newX, 
 						  }, 400, 'swing');
@@ -137,16 +172,16 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 					var newLocation = this.locationNum -= 1;
 						 
 				
-				if((this.playerID == 1)&&(this.locationNum == 35))  //entering finishing area 
+				if((this.baseID == 1)&&(this.locationNum == 35))  //entering finishing area 
 					newLocation = 70;
 
-				else if((this.playerID == 2)&&(this.locationNum == 18))  //entering finishing area
+				else if((this.baseID == 2)&&(this.locationNum == 18))  //entering finishing area
 					newLocation = 70;
 					
-				else if((this.playerID == 3)&&(this.locationNum == 52))  //entering finishing area
+				else if((this.baseID == 3)&&(this.locationNum == 52))  //entering finishing area
 					newLocation = 70;
 				
-				else if((this.playerID == 4)&&(this.locationNum == 69))  //entering finishing area
+				else if((this.baseID == 4)&&(this.locationNum == 69))  //entering finishing area
 					newLocation = 70;
 				
 				
@@ -158,26 +193,26 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 			}
 			
 		}
-		
-		setTimeout(checkForCollisions, (amount*400), this.locationNum, this.playerID);  //checks for collisions after the piece stops moving, which is 400ms times the number of spaces time after this
+		  
+		setTimeout(checkForCollisions, (amount*400), this.locationNum, this.baseID, this.id);  //checks for collisions after the piece stops moving, which is 400ms times the number of spaces time after this
 				
 	} 
 	 
 	this.enterPlayArea = function()
 	{
-		if(this.playerID == 1)
+		if(this.baseID == 1)
 		{
 			this.setLocation(39);
 		}
-		else if(this.playerID == 2)
+		else if(this.baseID == 2)
 		{
 			this.setLocation(22);
 		}
-		else if(this.playerID == 3)
+		else if(this.baseID == 3)
 		{
 			this.setLocation(56);
 		}
-		else if(this.playerID == 4)
+		else if(this.baseID == 4)
 		{
 			this.setLocation(5);
 		}				
@@ -192,22 +227,22 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 
 		if(LocNum <= 0)      //-3 to 0 = pieces at home base/jail    top left home base
 		{
-			if(this.playerID == 1)
+			if(this.baseID == 1)
 			{
 				newY = 100;
 				newX = 100 + (LocNum+3)*20;
 			}
-			else if(this.playerID == 2)
+			else if(this.baseID == 2)
 			{
 				newY = 100;
 				newX = 520 + (LocNum+3)*20;
 			}
-			else if(this.playerID == 3)
+			else if(this.baseID == 3)
 			{
 				newY = 600;
 				newX = 100 + (LocNum+3)*20;
 			}
-			else if(this.playerID == 4)
+			else if(this.baseID == 4)
 			{
 				newY = 600;
 				newX = 520 + (LocNum+3)*20;
@@ -277,22 +312,22 @@ function GamePiece(ImgSrc, LocNum, Id, PlayerID, BoardHeight)
 		}
 		else if(LocNum <= 77)   //70 to 77 are finish area spots
 		{
-			if(this.playerID == 1)
+			if(this.baseID == 1)
 			{
 				newX = 345;
 				newY = 51 + (LocNum - 69)*28.5;
 			}
-			else if(this.playerID == 2)
+			else if(this.baseID == 2)
 			{
 				newY = 335;
 				newX = 430 + (76 - LocNum)*28.5;
 			}
-			else if(this.playerID == 3)
+			else if(this.baseID == 3)
 			{
 				newY = 335;
 				newX = 60 + (LocNum - 69)*28.5;
 			}
-			else if(this.playerID == 4)
+			else if(this.baseID == 4)
 			{
 				newX = 345;
 				newY = 650 - (LocNum-68)*28.5;
