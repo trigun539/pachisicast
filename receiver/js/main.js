@@ -79,6 +79,10 @@ window.onload = function() {
   window.Pachisi.castReceiverManager.start();
 };
 
+/**
+ * Receiver to Sender Functions
+ */
+
 // Announce roll needed: senderId
 // parameters: players[currentPlayersTurn].senderID
 function announce_RollNeeded(senderId){
@@ -102,3 +106,46 @@ function announce_RollResult(senderId, dice1, dice2){
     dice2: dice2
   });
 }
+
+/**
+ * Cast connector: Reciver
+ */
+
+// var Pachisi = (function(cast){
+//   var module = {};
+//   module.PROTOCOL = 'urn:x-cast:com.edwinmike.pachisicast';
+//   module.Players = [];
+//   
+//   var init = function(){
+
+//     // Initialize Pachisi
+//     cast.receiver.logger.setLevelValue(0);
+//     module.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+//     module.messageBus = module.castReceiverManager.getCastMessageBus(module.PROTOCOL,
+//       cast.receiver.CastMessageBus.MessageType.JSON);
+
+//     // Event Listeners
+//     module.messageBus.onMessage = onMessage.bind(this);
+//     module.castReceiverManager.onSenderConnected =
+//         onSenderConnected.bind(this);
+//     module.castReceiverManager.onSenderDisconnected =
+//         onSenderDisconnected.bind(this);
+
+//     module.castReceiverManager.start();
+//   };
+
+//   var onSenderConnected = function(){
+
+//   };
+
+//   var onSenderDisconnected = function(){
+
+//   };
+
+//   var onMessage = function(){
+
+//   };
+
+//   return module;
+
+// }());
