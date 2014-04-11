@@ -151,8 +151,6 @@
 		<a href="javascript:void(0)" onclick="endTurn('456')">jim</a>&nbsp;
 		<a href="javascript:void(0)" onclick="endTurn('567')">sue</a><br/>
 		
-				
-		
 	</div>
 
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js" ></script>
@@ -165,11 +163,10 @@
     <script type="text/javascript" src="js/main.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function(){
-			initializeGame();
-		});
+		window.onload = function(){
+			window.Pachisi = new Pachisi();
+		};	
 	</script>
-
 
   </body>
 </html>
