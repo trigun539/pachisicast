@@ -20,6 +20,14 @@ function Player(PieceSrc, PositionNumber, BoardHeight, PlayerName, SenderID) {
 	
 	
 	
+	this.resetPieceStatuses = function()
+	{
+		for(i=0; i<4; i++)
+		{
+			this.pieces[i].usedThisTurn = false;
+		}
+	}
+	
 	this.makeBarrier = function(pieceID1, pieceID2)
 	{   
 		this.pieces[pieceID1].makeBarrier(true);
@@ -83,6 +91,8 @@ function GamePiece(ImgSrc, LocNum, Id, BaseID, BoardHeight)
 	this.y=0;
 	this.x=0;
 	this.isBarrier = false; 
+	this.usedThisTurn = false; 
+	
 	 
 	this.makeBarrier = function(isLeftSide)
 	{
@@ -145,14 +155,16 @@ function GamePiece(ImgSrc, LocNum, Id, BaseID, BoardHeight)
 						  { 'top': newY,
 						    'left': newX, 
 						  }, 400, 'swing');
-		
+		 
 		//$('#player' + this.playerID + "piece" + this.id).css('top', this.y);
 		//$('#player' + this.playerID + "piece" + this.id).css('left', this.x);
 	}
 	 
 	this.moveForward = function(amount)
 	{
- 
+ 		this.usedThisTurn = true;
+ 		
+ 		
 		var goingForward = true; 
 		
 		for(var i=0; i<amount; i++)
@@ -215,7 +227,9 @@ function GamePiece(ImgSrc, LocNum, Id, BaseID, BoardHeight)
 		else if(this.baseID == 4)
 		{
 			this.setLocation(5);
-		}				
+		}		
+		
+		this.moveForward(0);		
 	} 
 	 
 	 
