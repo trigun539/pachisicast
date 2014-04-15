@@ -13,21 +13,6 @@ dice[0] = 0;  //0 means inactive, otherwise 1 to 6
 dice[1] = 0; 
 
 
-function startGame()
-{ 
-	if(players.length > 1)
-	{
-		vc_playingGame();
-		playingGame = true;
-		waitingForRoll = true;	
-		randomFirstTurn();
-		try { announce_RollNeeded(players[currentPlayersTurn].senderID); }catch (e) {  }
-		
-		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
-		announce_gameStarted();
-	}
-}
- 
 
 function getPlayerIDFromSenderID(SenderID)  //gets the position in the players array [player id] from senderID [device id]
 {
@@ -50,7 +35,7 @@ function noPiecesInJail()
 	for(i=0; i<4; i++)
 	{
 		if(players[currentPlayersTurn].pieces[i].positionNum < 1)
-			returner = false
+			returner = false;
 	}
 	
 	return returner;
@@ -67,6 +52,9 @@ function nextPlayersTurn(currentPosition)
 		
 	else if((rolledDoubles)&&(noPiecesInJail()))		
 		newPosition = currentPosition;	 //console.log('this function needs to be done later');
+		
+	if(rolledDoubles)
+		rolledDoubles = false;  //so it doesn't carry over to the next call of this function	
 		
 	else
 	{ 
@@ -101,85 +89,13 @@ function nextPlayersTurn(currentPosition)
 		waitingForRoll = true;
 		currentPlayersTurn = j;
 		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum); 
+		players[currentPlayersTurn].resetPieceStatuses();
+		
 		try { announce_RollNeeded(players[currentPlayersTurn].senderID); }catch (e) {  }
 	}
 	
 }
 
-
-function rollDice(senderID)
-{
-	if((players[currentPlayersTurn].senderID == senderID)&&(waitingForRoll))
-	{
-		dice[0] = Math.floor((Math.random()*6 + 1));
-		dice[1] = Math.floor((Math.random()*6 + 1));
-		
-		rolledDoubles = (dice[0] == dice[1])? true:false;
-		
-		vc_rollDice(dice[0], dice[1], currentPlayersTurn);
-		
-		try { announce_RollResult(players[currentPlayersTurn].senderID, dice[0], dice[1]); }catch (e) {  }
-		waitingForRoll = false;
-	}
-}
-
-
-
-function selectPieceDice(senderID, pieceID, diceNum)
-{	
-	
-	var j = getPlayerIDFromSenderID(senderID);
-	
-	
-	var diceNumInt = parseInt(diceNum);
-	var validDice = true;
-	
-	if((dice[0] == 0)&&( (diceNum == '3')||(diceNum == '1') ))
-		validDice = false;
-		
-	if((dice[1] == 0)&&( (diceNum == '3')||(diceNum == '2') ))
-		validDice = false;
-		
-	var spaces;	
-		 
-	if(diceNum == '3')
-		spaces = dice[0] + dice[1];
-		
-	else if(diceNum == '2')
-		spaces = dice[1];
-		
-	else if(diceNum == '1')
-		spaces = dice[0];
-		
-
-	if(validDice)
-	{
-	
-		if((players[j].pieces[pieceID].locationNum <= 0) && (spaces >= 5))  //if at home base, and rolled atleast 5 
-		{
-			enterPiece(senderID, pieceID, diceNum);
-		}
-		
-		else if(players[j].pieces[pieceID].locationNum >= 1)
-		{
-			movePiece(senderID, pieceID, spaces, diceNum);
-		}
-			 
-	}
-}
-
- 
-function endTurn(senderID)
-{
-	
-	var j = getPlayerIDFromSenderID(senderID);	
-	
-	if(currentPlayersTurn == j)
-	{
-		removeDice('3');
-		nextPlayersTurn(players[currentPlayersTurn].positionNum);
-	}
-}
  
  
 function releaseBarrier(locationNum)  //releases any barriers at this location
@@ -246,8 +162,23 @@ function enterPiece(senderID, pieceNum, diceNum)
 {
 	var j = getPlayerIDFromSenderID(senderID);
 	
-	if((playingGame)&&(currentPlayersTurn == j)&&(!waitingForRoll)&&(players[j].pieces[pieceNum].locationNum < 1))
+	
+	if(!playingGame)
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+	
+	else if(currentPlayersTurn != j)
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		
+	else if(waitingForRoll)
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		
+	else if( players[j].pieces[pieceNum].locationNum >= 1 )
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
+	
+	else
 	{
+		announce_SuccessFail(senderID, 1, 'Piece entered into play');
+		
 		players[j].pieces[pieceNum].enterPlayArea();
 		removeDice(diceNum);
 		
@@ -265,8 +196,25 @@ function movePiece(senderID, pieceNum, spaces, diceNum)
 {
 	var j = getPlayerIDFromSenderID(senderID);
 	
-	if((playingGame)&&(currentPlayersTurn == j)&&(!waitingForRoll)&&(isValidMove(j,pieceNum,spaces) ))
+	if(!playingGame)
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+	
+	else if(currentPlayersTurn != j)
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		
+	else if(waitingForRoll)
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		
+	else if(!isValidMove(j,pieceNum,spaces) )
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not move there');
+		
+	else if(players[j].pieces[pieceNum].usedThisTurn)
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
+	
+	else
 	{
+		announce_SuccessFail(senderID, 1, 'Piece Moved');
+		
 		releaseBarrier(players[j].pieces[pieceNum].locationNum);
 		players[j].pieces[pieceNum].moveForward(spaces);
 		removeDice(diceNum);  
@@ -374,33 +322,7 @@ function randomFirstTurn()
 	currentPlayersTurn = Math.floor((Math.random()*players.length));
 }
 
-
-function joinGame(senderID, name, pieceSrc, positionNumber)
-{
-	// $('#debugMan').html(senderID + name + pieceSrc + positionNumber);
-
-	if((!playingGame)&&(!senderIDexists(senderID) )&&(!positionUsed(positionNumber)))
-	{
-		players.push(new Player(pieceSrc, positionNumber, dynamicBoardHeight, name, senderID));
-		vc_showPlayerName(name, positionNumber, dynamicBoardHeight);
-	}
-}
-
-function leaveGame(senderID)
-{
-	
-	if(!playingGame)   //can only leave the game in the lobby
-	{ 
-		var splicer = getPlayerIDFromSenderID(senderID);
-		
-		
-		vc_hidePlayerName(players[splicer].positionNum);
-		
-		players[splicer].killme();   //remove the pieces from board;
-		players.splice(splicer, 1);
-	}
-}
-
+ 
 
 function positionUsed(position)   //returns true if a player is in a home base position
 {
