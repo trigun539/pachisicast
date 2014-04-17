@@ -88,6 +88,10 @@
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>
+    <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/values/colors.xml -->
+    <eat-comment />
+
+    <color name="black_overlay">#66000000</color>
     <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/build/exploded-aar/com.google.android.gms/play-services/4.2.42/res/values/colors.xml -->
     <eat-comment />
 
@@ -224,6 +228,13 @@
 
         <!-- The ad unit ID. -->
         <attr name="adUnitId" format="string" />
+    </declare-styleable>
+    <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/values/attrs.xml -->
+    <eat-comment />
+
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
     <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/build/exploded-aar/com.android.support/appcompat-v7/19.0.1/res/values/values.xml -->
     <eat-comment />
@@ -649,7 +660,11 @@
     <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/values/strings.xml -->
     <eat-comment />
 
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="hello_world">Hello world!</string>
     <string name="instructions">Talk to me</string>
+    <string name="join_game">Join Game</string>
     <string name="media_route_menu_title">Play on…</string>
     <string name="message_to_cast">Message to Cast…</string>
     <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/build/exploded-aar/com.android.support/mediarouter-v7/19.0.1/res/values/values.xml -->
@@ -665,6 +680,9 @@
     <eat-comment />
 
     <string name="namespace">urn:x-cast:com.google.cast.sample.helloworld</string>
+    <string name="title_activity_game_settings">GameSettings</string>
+    <string name="title_activity_game_setts">GameSetts</string>
+    <string name="username">Username</string>
     <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/values/styles.xml -->
     <eat-comment />
 
@@ -678,6 +696,38 @@
 
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- <item name="android:actionBarStyle">@style/MyActionBar</item> -->
+    </style>
+
+    <style name="ButtonBar">
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:background">@android:drawable/bottom_bar</item>
+    </style>
+
+    <style name="ButtonBarButton" />
+
+    <style name="ButtonText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">@style/ButtonBar</item>
+        <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
     </style>
     <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/build/exploded-aar/com.android.support/appcompat-v7/19.0.1/res/values/values.xml -->
     <eat-comment />

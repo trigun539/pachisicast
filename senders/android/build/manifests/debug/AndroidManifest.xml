@@ -32,6 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:configChanges="orientation|keyboardHidden|screenSize" android:label="@string/title_activity_game_settings" android:name="com.example.casthelloworld.GameSettings" android:theme="@style/FullscreenTheme">
+        </activity>
+        <activity android:label="@string/title_activity_game_setts" android:name="com.example.casthelloworld.GameSetts">
+        </activity>
     </application>
 
 </manifest>

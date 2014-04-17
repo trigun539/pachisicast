@@ -52,6 +52,10 @@
             android:label="@string/title_activity_game_settings"
             android:theme="@style/FullscreenTheme" >
         </activity>
+        <activity
+            android:name="com.example.casthelloworld.GameSetts"
+            android:label="@string/title_activity_game_setts" >
+        </activity>
     </application>
 
 </manifest>

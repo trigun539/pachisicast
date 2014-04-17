@@ -11,34 +11,34 @@ public final class R {
 		public static final int adSize = 0x7f010059;
 		public static final int adSizes = 0x7f01005a;
 		public static final int adUnitId = 0x7f01005b;
-		public static final int cameraBearing = 0x7f010060;
-		public static final int cameraTargetLat = 0x7f010061;
-		public static final int cameraTargetLng = 0x7f010062;
-		public static final int cameraTilt = 0x7f010063;
-		public static final int cameraZoom = 0x7f010064;
-		public static final int mapType = 0x7f01005f;
-		public static final int uiCompass = 0x7f010065;
-		public static final int uiRotateGestures = 0x7f010066;
-		public static final int uiScrollGestures = 0x7f010067;
-		public static final int uiTiltGestures = 0x7f010068;
-		public static final int uiZoomControls = 0x7f010069;
-		public static final int uiZoomGestures = 0x7f01006a;
-		public static final int useViewLifecycle = 0x7f01006b;
-		public static final int zOrderOnTop = 0x7f01006c;
+		public static final int cameraBearing = 0x7f010062;
+		public static final int cameraTargetLat = 0x7f010063;
+		public static final int cameraTargetLng = 0x7f010064;
+		public static final int cameraTilt = 0x7f010065;
+		public static final int cameraZoom = 0x7f010066;
+		public static final int mapType = 0x7f010061;
+		public static final int uiCompass = 0x7f010067;
+		public static final int uiRotateGestures = 0x7f010068;
+		public static final int uiScrollGestures = 0x7f010069;
+		public static final int uiTiltGestures = 0x7f01006a;
+		public static final int uiZoomControls = 0x7f01006b;
+		public static final int uiZoomGestures = 0x7f01006c;
+		public static final int useViewLifecycle = 0x7f01006d;
+		public static final int zOrderOnTop = 0x7f01006e;
 	}
 	public static final class color {
-		public static final int common_action_bar_splitter = 0x7f060003;
-		public static final int common_signin_btn_dark_text_default = 0x7f060004;
-		public static final int common_signin_btn_dark_text_disabled = 0x7f060005;
-		public static final int common_signin_btn_dark_text_focused = 0x7f060006;
-		public static final int common_signin_btn_dark_text_pressed = 0x7f060007;
-		public static final int common_signin_btn_default_background = 0x7f060008;
-		public static final int common_signin_btn_light_text_default = 0x7f060009;
-		public static final int common_signin_btn_light_text_disabled = 0x7f06000a;
-		public static final int common_signin_btn_light_text_focused = 0x7f06000b;
-		public static final int common_signin_btn_light_text_pressed = 0x7f06000c;
-		public static final int common_signin_btn_text_dark = 0x7f06000e;
-		public static final int common_signin_btn_text_light = 0x7f06000f;
+		public static final int common_action_bar_splitter = 0x7f060004;
+		public static final int common_signin_btn_dark_text_default = 0x7f060005;
+		public static final int common_signin_btn_dark_text_disabled = 0x7f060006;
+		public static final int common_signin_btn_dark_text_focused = 0x7f060007;
+		public static final int common_signin_btn_dark_text_pressed = 0x7f060008;
+		public static final int common_signin_btn_default_background = 0x7f060009;
+		public static final int common_signin_btn_light_text_default = 0x7f06000a;
+		public static final int common_signin_btn_light_text_disabled = 0x7f06000b;
+		public static final int common_signin_btn_light_text_focused = 0x7f06000c;
+		public static final int common_signin_btn_light_text_pressed = 0x7f06000d;
+		public static final int common_signin_btn_text_dark = 0x7f06000f;
+		public static final int common_signin_btn_text_light = 0x7f060010;
 	}
 	public static final class drawable {
 		public static final int common_signin_btn_icon_dark = 0x7f020057;
@@ -65,10 +65,10 @@ public final class R {
 		public static final int common_signin_btn_text_normal_light = 0x7f02006c;
 		public static final int common_signin_btn_text_pressed_dark = 0x7f02006d;
 		public static final int common_signin_btn_text_pressed_light = 0x7f02006e;
-		public static final int ic_plusone_medium_off_client = 0x7f020070;
-		public static final int ic_plusone_small_off_client = 0x7f020071;
-		public static final int ic_plusone_standard_off_client = 0x7f020072;
-		public static final int ic_plusone_tall_off_client = 0x7f020073;
+		public static final int ic_plusone_medium_off_client = 0x7f020071;
+		public static final int ic_plusone_small_off_client = 0x7f020072;
+		public static final int ic_plusone_standard_off_client = 0x7f020073;
+		public static final int ic_plusone_tall_off_client = 0x7f020074;
 	}
 	public static final class id {
 		public static final int hybrid = 0x7f07000f;
@@ -113,7 +113,7 @@ public final class R {
 		public static final int AdsAttrs_adSize = 0;
 		public static final int AdsAttrs_adSizes = 1;
 		public static final int AdsAttrs_adUnitId = 2;
-		public static final int[] MapAttrs = { 0x7f01005f, 0x7f010060, 0x7f010061, 0x7f010062, 0x7f010063, 0x7f010064, 0x7f010065, 0x7f010066, 0x7f010067, 0x7f010068, 0x7f010069, 0x7f01006a, 0x7f01006b, 0x7f01006c };
+		public static final int[] MapAttrs = { 0x7f010061, 0x7f010062, 0x7f010063, 0x7f010064, 0x7f010065, 0x7f010066, 0x7f010067, 0x7f010068, 0x7f010069, 0x7f01006a, 0x7f01006b, 0x7f01006c, 0x7f01006d, 0x7f01006e };
 		public static final int MapAttrs_cameraBearing = 1;
 		public static final int MapAttrs_cameraTargetLat = 2;
 		public static final int MapAttrs_cameraTargetLng = 3;
