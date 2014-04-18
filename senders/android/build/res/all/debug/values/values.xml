@@ -680,6 +680,7 @@
     <eat-comment />
 
     <string name="namespace">urn:x-cast:com.google.cast.sample.helloworld</string>
+    <string name="title_activity_game">game</string>
     <string name="title_activity_game_settings">GameSettings</string>
     <string name="title_activity_game_setts">GameSetts</string>
     <string name="username">Username</string>

@@ -56,6 +56,10 @@
             android:name="com.example.casthelloworld.GameSetts"
             android:label="@string/title_activity_game_setts" >
         </activity>
+        <activity
+            android:name=".game"
+            android:label="@string/title_activity_game" >
+        </activity>
     </application>
 
 </manifest>

@@ -36,6 +36,8 @@
         </activity>
         <activity android:label="@string/title_activity_game_setts" android:name="com.example.casthelloworld.GameSetts">
         </activity>
+        <activity android:label="@string/title_activity_game" android:name="com.example.casthelloworld.game">
+        </activity>
     </application>
 
 </manifest>
