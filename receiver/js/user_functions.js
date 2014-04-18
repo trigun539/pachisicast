@@ -1,63 +1,44 @@
-
-
-function announce_SuccessFail(senderID, isSuccess, message)
+function endTurn(senderID, callback)
 {
-	if(isSuccess)
-		console.log(message)
-		
-	else
-		alert(message);
-}
-
-
-
-
-function endTurn(senderID)
-{
-	
 	var j = getPlayerIDFromSenderID(senderID);	
 	
 	
 	if(currentPlayersTurn != j)
-		announce_SuccessFail(senderID, 0, 'EndTurn failed.  It isnt your turn');
+		callback(senderID, 0, 'EndTurn failed.  It isnt your turn');
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Ended Turn');
+		callback(senderID, 1, 'Ended Turn');
 		removeDice('3');
 		nextPlayersTurn(players[currentPlayersTurn].positionNum);
 	}
 }
- 
 
-
-function joinGame(senderID, name, pieceSrc, positionNumber)
+function joinGame(senderID, name, pieceSrc, positionNumber, callback)
 {
 
 	if(playingGame)
-		announce_SuccessFail(senderID, 0, 'JoinGame failed.  Game has started already');
+		callback(senderID, 0, 'JoinGame failed.  Game has started already');
 		
 	else if( senderIDexists(senderID) )
-		announce_SuccessFail(senderID, 0, 'JoinGame failed.  Your sender ID is already in the game');
+		callback(senderID, 0, 'JoinGame failed.  Your sender ID is already in the game');
 		
 	else if( positionUsed(positionNumber) )
-		announce_SuccessFail(senderID, 0, 'JoinGame failed.  This position is taken already');
+		callback(senderID, 0, 'JoinGame failed.  This position is taken already');
 
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Joined Game');
+		callback(senderID, 1, 'Joined Game');
 		
 		players.push(new Player(pieceSrc, positionNumber, dynamicBoardHeight, name, senderID));
 		vc_showPlayerName(name, positionNumber, dynamicBoardHeight);
 	}
 }
 
-
-
-function leaveGame(senderID)
+function leaveGame(senderID, callback)
 {
 	
-	announce_SuccessFail(senderID, 1, 'Left Game');
+	callback(senderID, 1, 'Left Game');
 	
 	if(players[currentPlayersTurn].senderID == senderID) 
 		endTurn(senderID);	 
@@ -75,18 +56,17 @@ function leaveGame(senderID)
 		currentPlayersTurn--;     //-----###bandaid fix, may improve later
 }
 
-
-function rollDice(senderID)
+function rollDice(senderID, callback)
 {
 	if(players[currentPlayersTurn].senderID != senderID)
-		announce_SuccessFail(senderID, 0, 'RollDice fail.  It isnt your turn');
+		callback(senderID, 0, 'RollDice fail.  It isnt your turn');
 		
 	else if(!waitingForRoll)
-		announce_SuccessFail(senderID, 0, 'RollDice fail.  You have already rolled the dice');
+		callback(senderID, 0, 'RollDice fail.  You have already rolled the dice');
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Dice Rolled');
+		callback(senderID, 1, 'Dice Rolled');
 		
 		dice[0] = Math.floor((Math.random()*6 + 1));
 		dice[1] = Math.floor((Math.random()*6 + 1));
@@ -100,10 +80,7 @@ function rollDice(senderID)
 	}
 }
 
-
-
-
-function selectPieceDice(senderID, pieceID, diceNum)
+function selectPieceDice(senderID, pieceID, diceNum, callback)
 {	
 	
 	var j = getPlayerIDFromSenderID(senderID);
@@ -131,43 +108,40 @@ function selectPieceDice(senderID, pieceID, diceNum)
 		
 
 	if(!validDice)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  One or more of the dice selected is not available to use');
+		callback(senderID, 0, 'SelectPieceDice fail.  One or more of the dice selected is not available to use');
 
 	else
 	{
 	 
 		if((players[j].pieces[pieceID].locationNum <= 0) && (spaces >= 5))  //if at home base, and rolled atleast 5 
 		{ 
-			enterPiece(senderID, pieceID, diceNum);  //successfail inside that function
+			enterPiece(senderID, pieceID, diceNum, callback);  //successfail inside that function
 		}
 		
 		else if(players[j].pieces[pieceID].locationNum >= 1)
 		{ 
-			movePiece(senderID, pieceID, spaces, diceNum);  //successfail in that function
+			movePiece(senderID, pieceID, spaces, diceNum, callback);  //successfail in that function
 		}
 		
 		else if((players[j].pieces[pieceID].locationNum <= 0) && (spaces < 5))
 		{
-			announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  To enter a piece, you must use dice equal to atleast 5');
+			callback(senderID, 0, 'SelectPieceDice fail.  To enter a piece, you must use dice equal to atleast 5');
 		}
 			 
 	}
 }
 
-
-
-
-function startGame(senderID)
+function startGame(senderID, callback)
 { 
 	if(players.length < 2)
-		announce_SuccessFail(senderID, 0, 'StartGame fail.  Requires atleast 2 players to start');
+		callback(senderID, 0, 'StartGame fail.  Requires atleast 2 players to start');
 	
 	else if(playingGame)
-		announce_SuccessFail(senderID, 0, 'StartGame fail.  Game already started');
+		callback(senderID, 0, 'StartGame fail.  Game already started');
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Game Started');
+		callback(senderID, 1, 'Game Started');
 		
 		vc_playingGame();
 		playingGame = true;
@@ -179,4 +153,3 @@ function startGame(senderID)
 		announce_gameStarted();
 	}
 }
- 

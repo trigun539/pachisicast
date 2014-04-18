@@ -12,8 +12,6 @@ var dice = new Array();
 dice[0] = 0;  //0 means inactive, otherwise 1 to 6
 dice[1] = 0; 
 
-
-
 function getPlayerIDFromSenderID(SenderID)  //gets the position in the players array [player id] from senderID [device id]
 {
 	var j;
@@ -27,7 +25,6 @@ function getPlayerIDFromSenderID(SenderID)  //gets the position in the players a
 	return j;
 } 
  
- 
 function noPiecesInJail()
 {
 	var returner = true;
@@ -40,8 +37,6 @@ function noPiecesInJail()
 	
 	return returner;
 } 
- 
- 
  
 function nextPlayersTurn(currentPosition)
 {
@@ -71,7 +66,6 @@ function nextPlayersTurn(currentPosition)
 			newPosition = 3;
 	}	
 
-		
 	var j = -1;
 	
 	for(var i=0; i<players.length; i++)
@@ -93,10 +87,7 @@ function nextPlayersTurn(currentPosition)
 		
 		try { announce_RollNeeded(players[currentPlayersTurn].senderID); }catch (e) {  }
 	}
-	
 }
-
- 
  
 function releaseBarrier(locationNum)  //releases any barriers at this location
 {
@@ -109,7 +100,6 @@ function releaseBarrier(locationNum)  //releases any barriers at this location
 		}	 
 	}
 } 
- 
 
 function checkForCollisions(locationNum, baseID, pieceID)
 {
@@ -153,31 +143,28 @@ function checkForCollisions(locationNum, baseID, pieceID)
 		}	
 	
 	}	
-	
 }
 
-
-
-function enterPiece(senderID, pieceNum, diceNum)
+function enterPiece(senderID, pieceNum, diceNum, callback)
 {
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	
 	if(!playingGame)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+		callback(senderID, 0, 'SelectPieceDice fail.  Not playing game');
 	
 	else if(currentPlayersTurn != j)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		callback(senderID, 0, 'SelectPieceDice fail.  Not your turn');
 		
 	else if(waitingForRoll)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		callback(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
 		
 	else if( players[j].pieces[pieceNum].locationNum >= 1 )
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
+		callback(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Piece entered into play');
+		callback(senderID, 1, 'Piece entered into play');
 		
 		players[j].pieces[pieceNum].enterPlayArea();
 		removeDice(diceNum);
@@ -191,29 +178,28 @@ function enterPiece(senderID, pieceNum, diceNum)
 	}
 }
 
-
-function movePiece(senderID, pieceNum, spaces, diceNum)
+function movePiece(senderID, pieceNum, spaces, diceNum, callback)
 {
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	if(!playingGame)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+		callback(senderID, 0, 'SelectPieceDice fail.  Not playing game');
 	
 	else if(currentPlayersTurn != j)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		callback(senderID, 0, 'SelectPieceDice fail.  Not your turn');
 		
 	else if(waitingForRoll)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		callback(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
 		
 	else if(!isValidMove(j,pieceNum,spaces) )
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not move there');
+		callback(senderID, 0, 'SelectPieceDice fail.  This piece can not move there');
 		
 	else if(players[j].pieces[pieceNum].usedThisTurn)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
+		callback(senderID, 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Piece Moved');
+		callback(senderID, 1, 'Piece Moved');
 		
 		releaseBarrier(players[j].pieces[pieceNum].locationNum);
 		players[j].pieces[pieceNum].moveForward(spaces);
@@ -221,11 +207,8 @@ function movePiece(senderID, pieceNum, spaces, diceNum)
 		
 		if((dice[0] == 0)&&(dice[1] == 0))
 			nextPlayersTurn(players[currentPlayersTurn].positionNum);
-		
 	}
-	
 }
-
 
 function removeDice(diceNum)
 {
@@ -247,7 +230,6 @@ function removeDice(diceNum)
 		$('#dice1b').css('display','none');
 	}
 }
-
 
 function isValidMove(playerID, pieceNum, spaces)
 {
@@ -291,7 +273,6 @@ function isValidMove(playerID, pieceNum, spaces)
 	return returner;
 }
 
-
 function isBarrierHere(locationNum)  //returns the ID of the player at this location [if any], otherwise false
 {
 	var returner = false; 
@@ -309,20 +290,16 @@ function isBarrierHere(locationNum)  //returns the ID of the player at this loca
 	return returner;
 }
 
-
 function backToLobby()
 {
 	vc_waitingPlayers();
 	playingGame = false;
 }
 
-
 function randomFirstTurn()
 {
 	currentPlayersTurn = Math.floor((Math.random()*players.length));
 }
-
- 
 
 function positionUsed(position)   //returns true if a player is in a home base position
 {
@@ -338,7 +315,6 @@ function positionUsed(position)   //returns true if a player is in a home base p
 	return returner;
 }
 
-
 function senderIDexists(id)   //returns true if the sender id has already joined
 {
 	var returner = false;
@@ -352,7 +328,6 @@ function senderIDexists(id)   //returns true if the sender id has already joined
 	
 	return returner;
 }
-
 
 function initializeGame()
 {
@@ -382,7 +357,3 @@ function initializeGame()
 		},1500);
 
 }
-
-
-
-

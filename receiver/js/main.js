@@ -49,16 +49,21 @@ var cast = window.cast || {};
         case 'join':
           this.onJoin(event).bind(this);
           break;
+        case 'start':
+          startGame(event.senderId, function(senderId, isSuccess, message){
+            toSender(event.senderId, { isSuccess: isSuccess, message: message }); 
+          });
+          break;
+        case 'roll':
+          this.onRoll(event.senderId);
+          break;
         case 'move':
           selectPieceDice(event.senderId, event.data.data.pieceId, event.data.data.diceNum);
         case 'leave':
-          leaveGame(event.senderId);
+          this.onLeave(event.senderId);
           break;
-        case 'start':
-          startGame();
-          break;
-        case 'roll':
-          rollDice(event.senderId);
+        case 'endTurn':
+          this.onEndTurn(event.senderId);
           break;
         default:
           break;
@@ -74,20 +79,45 @@ var cast = window.cast || {};
         senderId: event.senderId,
         name: event.data.data.name
       });
-      joinGame(event.senderId, event.data.data.name, event.data.data.img, event.data.data.position);
-      toSender(event.senderId, 'joined');
+      joinGame(event.senderId, event.data.data.name, event.data.data.img, event.data.data.position, function(senderId, isSuccess, message){
+        toSender(event.senderId, { isSuccess: isSuccess, message: message });  
+      });
     },
 
-    onLeave: function(){
-      
+    onLeave: function(senderId){
+      leaveGame(senderId, function(senderId, isSuccess, message){
+        toSender(senderId, {isSuccess: isSuccess, message: message});
+      });
     },
 
     onMove: function(){
 
     },
 
-    onRoll: function(){
+    onRoll: function(senderId){
+      rollDice(senderId, function(senderId, isSuccess, message){
+        toSender(senderId, {isSuccess: isSuccess, message: message});
+      });
+    },
 
+    onEndTurn: function(senderId){
+      endTurn(senderId);
+    },
+
+    /**
+     * Announce Functions
+     */
+
+    announce_gameStarted: function(){
+      broadcast({action: 'start'});
+    },
+
+    announce_RollNeeded: function(senderId){
+      toSender(senderId, {action: 'roll'});
+    },
+
+    announce_RollResult: function(senderId, dice1, dice2){
+      toSender(senderId, {action: 'rollResult', dice1: dice1, dice2: dice2});
     },
 
     /**
@@ -99,7 +129,7 @@ var cast = window.cast || {};
     },
 
     broadcast: function(message){
-
+      this.messageBus.broadcast(message);
     }
   };
 
