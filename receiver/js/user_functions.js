@@ -150,6 +150,7 @@ function startGame(senderID, callback)
 		try { announce_RollNeeded(players[currentPlayersTurn].senderID); }catch (e) {  }
 		
 		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
+		resetScoreboard();
 		announce_gameStarted();
 	}
 }

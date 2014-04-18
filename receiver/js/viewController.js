@@ -28,11 +28,18 @@ function vc_waitingPlayers()   //shows the lobby screen
 		$('#lobbyMessage').animate(
 							  { 'left': '30%', 
 							  }, 1500, 'easeInOutQuad');
-							  
-							  
+				 			  
 }
 
-
+ 
+function vc_showScore(positionNum, Score, dynBoardHeight)  
+{
+	$('#p' + positionNum + 'score').html(Score);
+	
+	var dynamicFontSize = dynBoardHeight/20;
+	$('#p' + positionNum + 'score').css('font-size',dynamicFontSize + 'px'); 	
+} 
+ 
 
 function vc_showPlayerName(name, positionNumber, dynBoardHeight)   //shows the name on the board
 { 
