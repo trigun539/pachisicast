@@ -178,26 +178,26 @@ function checkForCollisions(locationNum, baseID, pieceID)
 	}	
 }
 
-function enterPiece(senderID, pieceNum, diceNum, callback)
+function enterPiece(senderID, pieceNum, diceNum)
 {
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	
 	if(!playingGame)
-		callback(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
 	
 	else if(currentPlayersTurn != j)
-		callback(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
 		
 	else if(waitingForRoll)
-		callback(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
 		
 	else if( players[j].pieces[pieceNum].locationNum >= 1 )
-		callback(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
 	
 	else
 	{
-		callback(senderID, 1, 'Piece entered into play');
+		announce_SuccessFail(senderID, 1, 'Piece entered into play');
 		
 		players[j].pieces[pieceNum].enterPlayArea();
 		removeDice(diceNum);
@@ -211,31 +211,31 @@ function enterPiece(senderID, pieceNum, diceNum, callback)
 	}
 }
 
-function movePiece(senderID, pieceNum, spaces, diceNum, callback)
+function movePiece(senderID, pieceNum, spaces, diceNum)
 {
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	if(!playingGame)
-		callback(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
 	
 	else if(currentPlayersTurn != j)
-		callback(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
 		
 	else if(waitingForRoll)
-		callback(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
 		
 	else if(!isValidMove(j,pieceNum,spaces) )
-		callback(senderID, 0, 'SelectPieceDice fail.  This piece can not move there');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not move there');
 		
 	else if(players[j].pieces[pieceNum].usedThisTurn)
-		callback(senderID, 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
 		
 	else if(players[j].pieces[pieceNum].atFinish)
-		callback(senderID, 0, 'SelectPieceDice fail.  This piece is at the finish and no longer in play');		
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece is at the finish and no longer in play');		
 	
 	else
 	{
-		callback(senderID, 1, 'Piece Moved');
+		announce_SuccessFail(senderID, 1, 'Piece Moved');
 		
 		releaseBarrier(players[j].pieces[pieceNum].locationNum);
 		players[j].pieces[pieceNum].moveForward(spaces);

@@ -1,44 +1,84 @@
-function endTurn(senderID, callback)
+
+//####  OUTGOING ############
+
+function announce_SuccessFail(senderID, _isSuccess, _message)
+{   
+	var data = {isSuccess:_isSuccess, message:_message}; 
+	Pachisi.toSender(senderID, data);
+} 
+
+
+function announce_gameStarted()
+{
+      Pachisi.broadcast({action: 'start'});
+}
+
+
+function announce_RollNeeded(senderId)
+{
+      Pachisi.toSender(senderId, {action: 'roll'});
+}
+
+
+function announce_RollResult(senderId, dice1, dice2)
+{
+      Pachisi.toSender(senderId, {action: 'rollResult', dice1: dice1, dice2: dice2});
+}
+    
+
+
+
+
+function debug(msg)
+{
+	$('#debugMan').append(msg);
+}
+
+
+
+//#### INCOMING ##############
+
+function endTurn(senderID)
 {
 	var j = getPlayerIDFromSenderID(senderID);	
 	
 	
 	if(currentPlayersTurn != j)
-		callback(senderID, 0, 'EndTurn failed.  It isnt your turn');
+		announce_SuccessFail(senderID, 0, 'EndTurn failed.  It isnt your turn');
 	
 	else
 	{
-		callback(senderID, 1, 'Ended Turn');
+		announce_SuccessFail(senderID, 1, 'Ended Turn');
 		removeDice('3');
 		nextPlayersTurn(players[currentPlayersTurn].positionNum);
 	}
 }
 
-function joinGame(senderID, name, pieceSrc, positionNumber, callback)
+function joinGame(senderID, name, pieceSrc, positionNumber)
 {
-
+ 
 	if(playingGame)
-		callback(senderID, 0, 'JoinGame failed.  Game has started already');
+		announce_SuccessFail(senderID, 0, 'JoinGame failed.  Game has started already');
 		
 	else if( senderIDexists(senderID) )
-		callback(senderID, 0, 'JoinGame failed.  Your sender ID is already in the game');
+		announce_SuccessFail(senderID, 0, 'JoinGame failed.  Your sender ID is already in the game');
 		
 	else if( positionUsed(positionNumber) )
-		callback(senderID, 0, 'JoinGame failed.  This position is taken already');
+		announce_SuccessFail(senderID, 0, 'JoinGame failed.  This position is taken already');
 
 	else
-	{
-		callback(senderID, 1, 'Joined Game');
+	{ 
+		announce_SuccessFail(senderID, 1, 'Joined Game'); 
 		
 		players.push(new Player(pieceSrc, positionNumber, dynamicBoardHeight, name, senderID));
 		vc_showPlayerName(name, positionNumber, dynamicBoardHeight);
 	}
 }
 
-function leaveGame(senderID, callback)
+function leaveGame(senderID)
 {
 	
-	callback(senderID, 1, 'Left Game');
+	announce_SuccessFail(senderID, 1, 'Left Game');
 	
 	if(players[currentPlayersTurn].senderID == senderID) 
 		endTurn(senderID);	 
@@ -56,17 +96,17 @@ function leaveGame(senderID, callback)
 		currentPlayersTurn--;     //-----###bandaid fix, may improve later
 }
 
-function rollDice(senderID, callback)
+function rollDice(senderID)
 {
 	if(players[currentPlayersTurn].senderID != senderID)
-		callback(senderID, 0, 'RollDice fail.  It isnt your turn');
+		announce_SuccessFail(senderID, 0, 'RollDice fail.  It isnt your turn');
 		
 	else if(!waitingForRoll)
-		callback(senderID, 0, 'RollDice fail.  You have already rolled the dice');
+		announce_SuccessFail(senderID, 0, 'RollDice fail.  You have already rolled the dice');
 	
 	else
 	{
-		callback(senderID, 1, 'Dice Rolled');
+		announce_SuccessFail(senderID, 1, 'Dice Rolled');
 		
 		dice[0] = Math.floor((Math.random()*6 + 1));
 		dice[1] = Math.floor((Math.random()*6 + 1));
@@ -80,7 +120,7 @@ function rollDice(senderID, callback)
 	}
 }
 
-function selectPieceDice(senderID, pieceID, diceNum, callback)
+function selectPieceDice(senderID, pieceID, diceNum)
 {	
 	
 	var j = getPlayerIDFromSenderID(senderID);
@@ -108,40 +148,40 @@ function selectPieceDice(senderID, pieceID, diceNum, callback)
 		
 
 	if(!validDice)
-		callback(senderID, 0, 'SelectPieceDice fail.  One or more of the dice selected is not available to use');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  One or more of the dice selected is not available to use');
 
 	else
 	{
 	 
 		if((players[j].pieces[pieceID].locationNum <= 0) && (spaces >= 5))  //if at home base, and rolled atleast 5 
 		{ 
-			enterPiece(senderID, pieceID, diceNum, callback);  //successfail inside that function
+			enterPiece(senderID, pieceID, diceNum);  //successfail inside that function
 		}
 		
 		else if(players[j].pieces[pieceID].locationNum >= 1)
 		{ 
-			movePiece(senderID, pieceID, spaces, diceNum, callback);  //successfail in that function
+			movePiece(senderID, pieceID, spaces, diceNum);  //successfail in that function
 		}
 		
 		else if((players[j].pieces[pieceID].locationNum <= 0) && (spaces < 5))
 		{
-			callback(senderID, 0, 'SelectPieceDice fail.  To enter a piece, you must use dice equal to atleast 5');
+			announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  To enter a piece, you must use dice equal to atleast 5');
 		}
 			 
 	}
 }
 
-function startGame(senderID, callback)
+function startGame(senderID)
 { 
 	if(players.length < 2)
-		callback(senderID, 0, 'StartGame fail.  Requires atleast 2 players to start');
+		announce_SuccessFail(senderID, 0, 'StartGame fail.  Requires atleast 2 players to start');
 	
 	else if(playingGame)
-		callback(senderID, 0, 'StartGame fail.  Game already started');
+		announce_SuccessFail(senderID, 0, 'StartGame fail.  Game already started');
 	
 	else
 	{
-		callback(senderID, 1, 'Game Started');
+		announce_SuccessFail(senderID, 1, 'Game Started');
 		
 		vc_playingGame();
 		playingGame = true;

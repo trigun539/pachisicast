@@ -44,10 +44,10 @@ var cast = window.cast || {};
       }
     },
 
-    onMessage: function(){
+    onMessage: function(event){    
       switch (event.data.action){
         case 'join':
-          this.onJoin(event).bind(this);
+          this.onJoin(event.senderId, event.data.data.name, event.data.data.img, event.data.data.position);
           break;
         case 'start':
           startGame(event.senderId, function(senderId, isSuccess, message){
@@ -74,20 +74,16 @@ var cast = window.cast || {};
      * GAME FUNCTIONS
      */
 
-    onJoin: function(event){
-      this.Players.push({
-        senderId: event.senderId,
-        name: event.data.data.name
-      });
-      joinGame(event.senderId, event.data.data.name, event.data.data.img, event.data.data.position, function(senderId, isSuccess, message){
-        toSender(event.senderId, { isSuccess: isSuccess, message: message });  
-      });
+    onJoin: function(senderId, playerName, pieceImage, Position){
+      //this.Players.push({
+        //senderId: event.senderId,
+        //name: event.data.data.name
+      //}); 
+      joinGame(senderId, playerName, pieceImage, Position);
     },
 
     onLeave: function(senderId){
-      leaveGame(senderId, function(senderId, isSuccess, message){
-        toSender(senderId, {isSuccess: isSuccess, message: message});
-      });
+      leaveGame(senderId);
     },
 
     onMove: function(){
@@ -95,36 +91,24 @@ var cast = window.cast || {};
     },
 
     onRoll: function(senderId){
-      rollDice(senderId, function(senderId, isSuccess, message){
-        toSender(senderId, {isSuccess: isSuccess, message: message});
-      });
+      rollDice(senderId);
     },
 
     onEndTurn: function(senderId){
       endTurn(senderId);
     },
+ 
 
-    /**
-     * Announce Functions
-     */
 
-    announce_gameStarted: function(){
-      broadcast({action: 'start'});
-    },
-
-    announce_RollNeeded: function(senderId){
-      toSender(senderId, {action: 'roll'});
-    },
-
-    announce_RollResult: function(senderId, dice1, dice2){
-      toSender(senderId, {action: 'rollResult', dice1: dice1, dice2: dice2});
-    },
+ 
 
     /**
      * COMMUNICATION
      */
 
     toSender: function(senderId, message){
+    	debug(senderId);
+    	debug(message);
       this.messageBus.send(senderId, message);
     },
 
