@@ -23,6 +23,7 @@
             android:layout_marginLeft="20dp">
 
             <View
+                android:id="@+id/piece_1_background"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/player_position"
@@ -31,6 +32,7 @@
             </View>
 
             <View
+                android:id="@+id/piece_3_background"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/player_position">
@@ -45,6 +47,7 @@
             android:orientation="vertical">
 
             <View
+                android:id="@+id/piece_2_background"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/player_position"
@@ -53,6 +56,7 @@
             </View>
 
             <View
+                android:id="@+id/piece_4_background"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/player_position">
@@ -94,5 +98,35 @@
             android:minWidth="100dp">
 
     </LinearLayout>
+
+    <!-- Pieces Labels -->
+
+    <TextView
+        android:id="@+id/piece_1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:text="@string/piece_1_name"
+        android:layout_toStartOf="@id/piece_1_background"/>
+
+    <TextView
+        android:id="@+id/piece_2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:text="@string/piece_2_name"
+        android:layout_toStartOf="@id/piece_2_background"/>
+
+    <TextView
+        android:id="@+id/piece_2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:text="@string/piece_3_name"
+        android:layout_toStartOf="@id/piece_3_background"/>
+
+    <TextView
+        android:id="@+id/piece_2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:text="@string/piece_4_name"
+        android:layout_toStartOf="@id/piece_4_background"/>
 
 </RelativeLayout>

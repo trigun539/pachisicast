@@ -44,9 +44,10 @@ var cast = window.cast || {};
       }
     },
 
-    onMessage: function(){
+    onMessage: function(event){
       switch (event.data.action){
         case 'join':
+          console.log(event);
           this.onJoin(event).bind(this);
           break;
         case 'start':

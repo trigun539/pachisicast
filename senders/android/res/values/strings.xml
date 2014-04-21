@@ -31,5 +31,9 @@
     <string name="title_activity_game_setts">GameSetts</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_game">game</string>
+    <string name="piece_1_name">1</string>
+    <string name="piece_2_name">2</string>
+    <string name="piece_3_name">3</string>
+    <string name="piece_4_name">4</string>
 
 </resources>

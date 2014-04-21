@@ -105,6 +105,14 @@
     <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
     <color name="common_signin_btn_light_text_focused">#FF737373</color>
     <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
+    <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/values/colors.xml -->
+    <eat-comment />
+
+    <color name="main_blue">#2F38A2</color>
+    <color name="main_green">#32C845</color>
+    <color name="main_purple">#C82BF7</color>
+    <color name="main_red">#F34341</color>
+    <color name="main_yellow">#FEF55A</color>
     <!-- From: file:/Users/eperez/apps/pachisicast/senders/android/build/exploded-aar/com.android.support/appcompat-v7/19.0.1/res/values/values.xml -->
     <eat-comment />
 

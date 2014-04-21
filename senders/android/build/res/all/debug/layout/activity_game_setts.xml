@@ -72,5 +72,4 @@
         android:layout_alignParentRight="true"
         android:minWidth="100dp">
 
-</RelativeLayout>
-<!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/layout/activity_game_setts.xml -->
+</RelativeLayout><!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/layout/activity_game_setts.xml -->

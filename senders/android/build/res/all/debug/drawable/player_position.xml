@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval" >
+    <stroke android:width="4px" android:color="#FFFFFF" />
+    <gradient android:startColor="#ff5950ff"
+        android:endColor="#80FF00FF"
+        android:angle="270"/>
+</shape><!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/drawable/player_position.xml -->
