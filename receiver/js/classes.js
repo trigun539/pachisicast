@@ -2,7 +2,7 @@ function GameBoard(Source, Width, Height) {
     this.source = Source;
     this.width = Width;
     this.height = Height;
-    
+
     this.drawme = function()
     {
     	$('#board').attr('src','img/' + this.source);
@@ -12,13 +12,21 @@ function GameBoard(Source, Width, Height) {
 }
 
 function Player(PieceSrc, PositionNumber, BoardHeight, PlayerName, SenderID) {
-	this.positionNum = PositionNumber;
+	this.positionNum = PositionNumber; 
+	this.boardHeight = BoardHeight;
 	this.senderID = SenderID;
 	this.pieceSrc = PieceSrc;
 	this.playerName = PlayerName;
 	this.pieces = new Array();
+	this.score = 0;
 	
 	
+	this.setScore = function(Score)
+	{
+		this.score = Score;
+		vc_showScore(this.positionNum, Score, this.boardHeight);
+		
+	}
 	
 	this.resetPieceStatuses = function()
 	{
@@ -92,6 +100,7 @@ function GamePiece(ImgSrc, LocNum, Id, BaseID, BoardHeight)
 	this.x=0;
 	this.isBarrier = false; 
 	this.usedThisTurn = false; 
+	this.atFinish = false;   //if the piece is at the finish
 	
 	 
 	this.makeBarrier = function(isLeftSide)
@@ -205,6 +214,8 @@ function GamePiece(ImgSrc, LocNum, Id, BaseID, BoardHeight)
 			}
 			
 		}
+		  
+		
 		  
 		setTimeout(checkForCollisions, (amount*400), this.locationNum, this.baseID, this.id);  //checks for collisions after the piece stops moving, which is 400ms times the number of spaces time after this
 				
@@ -346,8 +357,19 @@ function GamePiece(ImgSrc, LocNum, Id, BaseID, BoardHeight)
 				newX = 345;
 				newY = 650 - (LocNum-68)*28.5;
 			}
-
-			
+		}
+		
+		
+		if(LocNum == 77)  //finished piece
+		{
+			if((this.baseID == 1)||(this.baseID == 4))  //horizontal placement
+			{
+				newX += (this.id-1.5)*28.5;
+			}
+			else  //vertical placement
+			{
+				newY += (this.id-1.5)*28.5;
+			}
 		}
  
 		

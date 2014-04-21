@@ -71,6 +71,39 @@ canvas {
 	height:3%;	
 }
 
+.playerScore
+{
+	position:absolute;
+	background-color:#000000;
+	color: #ddeeff;
+	width:7%;
+	height:7%;	
+}
+
+#p1score
+{
+	top:19%;
+	left:15%;
+}
+
+#p2score
+{
+	top:19%;
+	right:15%;
+}
+
+#p3score
+{
+	bottom:10%;
+	left:15%;
+}
+
+#p4score
+{
+	bottom:10%;
+	right:15%;
+}
+
 #p1name
 {
 	top:8.5%;

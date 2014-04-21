@@ -24,6 +24,28 @@ function getPlayerIDFromSenderID(SenderID)  //gets the position in the players a
 	
 	return j;
 } 
+
+function getPlayerIDfromBaseID(baseID)
+{
+	var j;
+	
+	for(var i=0; i<players.length; i++)
+	{
+		if(players[i].positionNum == baseID)	
+			j = i;
+	}		
+	
+	return j;
+}
+ 
+ 
+function resetScoreboard()
+{
+	for(var i=0; i<players.length; i++)
+		players[i].setScore(0);
+	
+} 
+
  
 function noPiecesInJail()
 {
@@ -116,6 +138,17 @@ function checkForCollisions(locationNum, baseID, pieceID)
 	else if((locationNum == 5)&&(baseID != 4))	
 		console.log('safe zone');
 		
+	else if(locationNum == 77)  //this piece is done
+	{
+		var i = getPlayerIDfromBaseID(baseID);
+		
+		players[i].pieces[pieceID].atFinish = true;
+		players[i].setScore( players[i].score + 1 );
+		
+		if(players[i].score == 4)
+			alert('YOU WIN!!!!!');
+	}	
+		
 	else
 	{	
 
@@ -145,26 +178,26 @@ function checkForCollisions(locationNum, baseID, pieceID)
 	}	
 }
 
-function enterPiece(senderID, pieceNum, diceNum, callback)
+function enterPiece(senderID, pieceNum, diceNum)
 {
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	
 	if(!playingGame)
-		callback(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
 	
 	else if(currentPlayersTurn != j)
-		callback(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
 		
 	else if(waitingForRoll)
-		callback(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
 		
 	else if( players[j].pieces[pieceNum].locationNum >= 1 )
-		callback(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
 	
 	else
 	{
-		callback(senderID, 1, 'Piece entered into play');
+		announce_SuccessFail(senderID, 1, 'Piece entered into play');
 		
 		players[j].pieces[pieceNum].enterPlayArea();
 		removeDice(diceNum);
@@ -178,28 +211,31 @@ function enterPiece(senderID, pieceNum, diceNum, callback)
 	}
 }
 
-function movePiece(senderID, pieceNum, spaces, diceNum, callback)
+function movePiece(senderID, pieceNum, spaces, diceNum)
 {
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	if(!playingGame)
-		callback(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
 	
 	else if(currentPlayersTurn != j)
-		callback(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
 		
 	else if(waitingForRoll)
-		callback(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
 		
 	else if(!isValidMove(j,pieceNum,spaces) )
-		callback(senderID, 0, 'SelectPieceDice fail.  This piece can not move there');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not move there');
 		
 	else if(players[j].pieces[pieceNum].usedThisTurn)
-		callback(senderID, 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
+		
+	else if(players[j].pieces[pieceNum].atFinish)
+		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece is at the finish and no longer in play');		
 	
 	else
 	{
-		callback(senderID, 1, 'Piece Moved');
+		announce_SuccessFail(senderID, 1, 'Piece Moved');
 		
 		releaseBarrier(players[j].pieces[pieceNum].locationNum);
 		players[j].pieces[pieceNum].moveForward(spaces);
@@ -336,7 +372,7 @@ function initializeGame()
 	
 	
 	vc_reshapeGraphicsDiv();
-	vc_waitingPlayers()
+	vc_waitingPlayers();
 
 	//players.push(new Player('bluepiece.png', 1, dynamicBoardHeight)); 
 	//players.push(new Player('bluepiece.png', 2, dynamicBoardHeight)); 

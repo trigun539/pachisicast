@@ -13,6 +13,11 @@
   			<div id="p3name" class="playerName" ></div>
   			<div id="p4name" class="playerName" ></div>
   			
+  			<div id="p1score" class="playerScore" ></div>
+  			<div id="p2score" class="playerScore" ></div>
+  			<div id="p3score" class="playerScore" ></div>
+  			<div id="p4score" class="playerScore" ></div>  			
+  			
   			<img class="dices" id="dice1" src="img/dice_rotate.gif" />
   			<img class="dices" id="dice1b"  />
   			<img class="dices" id="dice2" src="img/dice_rotate.gif" />
@@ -33,14 +38,14 @@
 	</div>
 	
 	<div id="testPanel">
-		<a href="javascript:void(0)" onclick="startGame()">start game</a><br/>
-		<a href="javascript:void(0)" onclick="backToLobby()">to lobby</a><br/>
+		<a href="javascript:void(0)" onclick="startGame( '123' )">start game</a><br/>
+		<a href="javascript:void(0)" onclick="backToLobby( function(){} )">to lobby</a><br/>
 		
 		joe join, spot:
 		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '1')">1</a>&nbsp;
-		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '2')">2</a>&nbsp;
-		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '3')">3</a>&nbsp;
-		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '4')">4</a><br/>
+		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '2'))">2</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '3'))">3</a>&nbsp;
+		<a href="javascript:void(0)" onclick="joinGame('123', 'joe', 'bluepiece.png', '4'))">4</a><br/>
 
 		bob join, spot:
 		<a href="javascript:void(0)" onclick="joinGame('345', 'bobward', 'greenpiece.png', '1')">1</a>&nbsp;
@@ -150,6 +155,7 @@
 		<a href="javascript:void(0)" onclick="endTurn('345')">bob</a>&nbsp;
 		<a href="javascript:void(0)" onclick="endTurn('456')">jim</a>&nbsp;
 		<a href="javascript:void(0)" onclick="endTurn('567')">sue</a><br/>
+		 
 		
 	</div>
 
@@ -166,6 +172,7 @@
 	<script type="text/javascript">
 		window.onload = function(){
 			window.Pachisi = new Pachisi();
+			initializeGame();
 		};	
 	</script>
 
