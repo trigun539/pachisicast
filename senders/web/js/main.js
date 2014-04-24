@@ -78,10 +78,15 @@ function sessionUpdateListener(isAlive) {
  */
 function receiverMessage(namespace, message) {
   console.log('Receiver Message: ', message);
-
-  switch (message.action){
-    case 'roll':
-      rollNeeded();
+	var messageObject = JSON.parse( message );
+ 
+  switch (messageObject.action){ 
+  	case 'start':
+  	  Pachisicast.gameStarted();
+  	  break;
+  	  
+    case 'successFail':
+      Pachisicast.parseSuccessFail(messageObject); 
       break;
     default:
       break;
@@ -130,3 +135,5 @@ function sendMessage(message) {
 function rollNeeded(){
   console.log('Its my turn');
 }
+
+ 

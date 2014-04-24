@@ -3,7 +3,7 @@
 
 function announce_SuccessFail(senderID, _isSuccess, _message)
 {   
-	var data = {isSuccess:_isSuccess, message:_message}; 
+	var data = {action:'successFail', isSuccess:_isSuccess, message:_message}; 
 	Pachisi.toSender(senderID, data);
 } 
 

@@ -27,7 +27,15 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div class="container-fluid">
+
+  <div id="intro" class="container-fluid">
+  	<h1>PARCHEESI</h1>
+  	<h3>A game for idiots</h3>
+  	<button id="goToSettings" clas="btn btn-default">PLAY</button>
+  </div>
+
+
+  <div id="settings" class="container-fluid">
     <div class="row">
       <div class="col-md-10">
         <div class="form-group">
@@ -43,11 +51,27 @@
         </div>
         <button id="joinGame" class="btn btn-default">Join Game!</button>
         <button id="leaveGame" class="btn btn-danger">Leave Game</button>
-        <button id="startGame" class="btn btn-default">Start Game</button>
-        <button id="roll" class="btn btn-default">Roll Dice!</button>
+        <button id="startGame" class="btn btn-default">Start Game</button> 
       </div>
     </div>
   </div>
+  
+  
+
+  <div id="inGame" class="container-fluid">
+    <div class="row">
+      <div class="col-md-10">
+      	<button id="leaveGame" class="btn btn-danger">Leave Game</button> 
+        <button id="roll" class="btn btn-default">Roll Dice</button> 
+      </div>
+    </div>
+  </div>
+
+
+  <div id="loader" class="container-fluid">
+  	<img src="img/725.GIF" />
+  </div>
+
   
 </body>
 </html>
