@@ -9,6 +9,7 @@
     android:background="#202020"
     tools:context="com.example.casthelloworld.game">
 
+    <!-- Piece Backgrounds -->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="215dp"
@@ -67,6 +68,60 @@
 
     </LinearLayout>
 
+    <!-- Piece Names -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="215dp"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/piece_1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/piece_1_name"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/piece_3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/piece_2_name"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/piece_2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/piece_3_name"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/piece_4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/piece_4_name"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Buttons -->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="65dp"
@@ -97,35 +152,5 @@
             android:minWidth="100dp"></Button>
 
     </LinearLayout>
-
-    <!-- Pieces Labels -->
-
-    <TextView
-        android:id="@+id/piece_1"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:text="@string/piece_1_name"
-        android:layout_toStartOf="@id/piece_1_background"/>
-
-    <TextView
-        android:id="@+id/piece_2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:text="@string/piece_2_name"
-        android:layout_toStartOf="@id/piece_2_background"/>
-
-    <TextView
-        android:id="@+id/piece_2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:text="@string/piece_3_name"
-        android:layout_toStartOf="@id/piece_3_background"/>
-
-    <TextView
-        android:id="@+id/piece_2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:text="@string/piece_4_name"
-        android:layout_toStartOf="@id/piece_4_background"/>
 
 </RelativeLayout>

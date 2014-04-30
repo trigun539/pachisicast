@@ -158,13 +158,18 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2761628" vertical-offset="920" max-vertical-offset="1740">
-              <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5694864" vertical-offset="1273" max-vertical-offset="1980">
+              <caret line="110" column="40" selection-start-line="110" selection-start-column="40" selection-end-line="110" selection-end-column="40" />
               <folding>
-                <element signature="tag#TextView#0;tag#RelativeLayout#0" expanded="false" />
-                <element signature="tag#TextView#1;tag#RelativeLayout#0" expanded="false" />
-                <element signature="tag#TextView#2;tag#RelativeLayout#0" expanded="false" />
-                <element signature="tag#TextView#3;tag#RelativeLayout#0" expanded="false" />
+                <element signature="e#231#266#0" expanded="true" />
+                <element signature="e#292#327#0" expanded="true" />
+                <element signature="e#351#384#0" expanded="true" />
+                <element signature="e#411#444#0" expanded="true" />
+                <element signature="e#2961#2983#0" expanded="true" />
+                <element signature="e#3212#3234#0" expanded="true" />
+                <element signature="e#3644#3666#0" expanded="true" />
+                <element signature="e#3895#3917#0" expanded="true" />
+                <element signature="tag#LinearLayout#2;tag#RelativeLayout#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -1569,13 +1574,18 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2761628" vertical-offset="920" max-vertical-offset="1740">
-          <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.5694864" vertical-offset="1273" max-vertical-offset="1980">
+          <caret line="110" column="40" selection-start-line="110" selection-start-column="40" selection-end-line="110" selection-end-column="40" />
           <folding>
-            <element signature="tag#TextView#0;tag#RelativeLayout#0" expanded="false" />
-            <element signature="tag#TextView#1;tag#RelativeLayout#0" expanded="false" />
-            <element signature="tag#TextView#2;tag#RelativeLayout#0" expanded="false" />
-            <element signature="tag#TextView#3;tag#RelativeLayout#0" expanded="false" />
+            <element signature="e#231#266#0" expanded="true" />
+            <element signature="e#292#327#0" expanded="true" />
+            <element signature="e#351#384#0" expanded="true" />
+            <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#2961#2983#0" expanded="true" />
+            <element signature="e#3212#3234#0" expanded="true" />
+            <element signature="e#3644#3666#0" expanded="true" />
+            <element signature="e#3895#3917#0" expanded="true" />
+            <element signature="tag#LinearLayout#2;tag#RelativeLayout#0" expanded="false" />
           </folding>
         </state>
       </provider>
