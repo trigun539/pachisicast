@@ -47,17 +47,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.casthelloworld.GameSettings"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_game_settings"
-            android:theme="@style/FullscreenTheme" >
-        </activity>
-        <activity
             android:name="com.example.casthelloworld.GameSetts"
             android:label="@string/title_activity_game_setts" >
         </activity>
         <activity
-            android:name=".game"
+            android:name="com.example.casthelloworld.game"
             android:label="@string/title_activity_game" >
         </activity>
     </application>
