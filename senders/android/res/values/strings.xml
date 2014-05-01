@@ -35,5 +35,6 @@
     <string name="piece_2_name">2</string>
     <string name="piece_3_name">3</string>
     <string name="piece_4_name">4</string>
+    <string name="title_activity_settings">Settings</string>
 
 </resources>

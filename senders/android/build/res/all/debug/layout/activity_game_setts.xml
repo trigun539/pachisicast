@@ -70,6 +70,6 @@
         style="@style/ButtonText"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:minWidth="100dp">
+        android:minWidth="100dp"></Button>
 
 </RelativeLayout><!-- From: file:/Users/eperez/apps/pachisicast/senders/android/res/layout/activity_game_setts.xml -->
