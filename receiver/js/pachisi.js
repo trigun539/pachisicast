@@ -179,9 +179,9 @@ function checkForCollisions(locationNum, baseID, pieceID)
 }
 
 function enterPiece(senderID, pieceNum, diceNum)
-{
+{ debug('666');
 	var j = getPlayerIDFromSenderID(senderID);
-	
+	 debug('777');
 	
 	if(!playingGame)
 		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
@@ -196,7 +196,7 @@ function enterPiece(senderID, pieceNum, diceNum)
 		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
 	
 	else
-	{
+	{ 
 		announce_SuccessFail(senderID, 1, 'Piece entered into play');
 		
 		players[j].pieces[pieceNum].enterPlayArea();

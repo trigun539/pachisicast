@@ -81,10 +81,15 @@ function receiverMessage(namespace, message) {
 	var messageObject = JSON.parse( message );
  
   switch (messageObject.action){ 
-  	case 'start':
+  	case 'started':
   	  Pachisicast.gameStarted();
   	  break;
-  	  
+  	case 'roll':
+  	  Pachisicast.yourTurnToRoll();
+  	  break;
+  	case 'rollResult':
+  	  Pachisicast.showRollResult(messageObject);
+  	  break;
     case 'successFail':
       Pachisicast.parseSuccessFail(messageObject); 
       break;

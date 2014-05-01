@@ -18,3 +18,15 @@ input {
 	top: 80px;
 	left: 150px;
 }
+
+#gameBox {
+	border: 3px dotted red;
+}
+
+#rollBox {
+	display:none;	
+}
+
+#rollResultBox {
+	display:none;
+}

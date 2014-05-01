@@ -49,20 +49,47 @@
                   <option value="4">Yellow</option>
           </select>
         </div>
-        <button id="joinGame" class="btn btn-default">Join Game!</button>
+        <button id="joinGame" class="btn btn-default">Join Game!</button>  
+      </div>
+    </div>
+  </div>
+  
+  
+  <div id="settingsWaiting" class="container-fluid">
+    <div class="row">
+      <div class="col-md-10">
+      	<h2>Waiting For Game to be started...</h2>
         <button id="leaveGame" class="btn btn-danger">Leave Game</button>
         <button id="startGame" class="btn btn-default">Start Game</button> 
       </div>
     </div>
   </div>
   
-  
 
   <div id="inGame" class="container-fluid">
     <div class="row">
       <div class="col-md-10">
       	<button id="leaveGame" class="btn btn-danger">Leave Game</button> 
-        <button id="roll" class="btn btn-default">Roll Dice</button> 
+      	
+      	<div id="gameBox">
+	      	<div id="rollBox">
+	      		<h3>Your Turn to Roll!</h3>
+	        	<button id="roll" class="btn btn-default">Roll Dice</button> 
+	        </div>
+	        <div id="rollResultBox">
+	        	You Rolled....<br/>
+	        	<input id="dice1" type="checkbox" ><span id="dice1text"></span><br/>
+	        	<input id="dice2" type="checkbox" ><span id="dice2text"></span><br/><br/>
+	        	
+	        	Pieces<br/>
+	        	<input id="piece0" name="piece" type="radio">Piece 1<br/>
+	        	<input id="piece1" name="piece" type="radio">Piece 2<br/>
+	        	<input id="piece2" name="piece" type="radio">Piece 3<br/>
+	        	<input id="piece3" name="piece" type="radio">Piece 4<br/>
+	        	
+	        	<button id="selectPieceDice" class="btn btn-default">Move Piece</button> 
+	        </div>
+        </div>
       </div>
     </div>
   </div>

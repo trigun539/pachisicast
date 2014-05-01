@@ -9,8 +9,8 @@ function announce_SuccessFail(senderID, _isSuccess, _message)
 
 
 function announce_gameStarted()
-{
-      Pachisi.broadcast({action: 'start'});
+{ 
+      Pachisi.broadcast({action: 'started'});
 }
 
 
@@ -121,8 +121,7 @@ function rollDice(senderID)
 }
 
 function selectPieceDice(senderID, pieceID, diceNum)
-{	
-	
+{	  
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	
@@ -134,9 +133,9 @@ function selectPieceDice(senderID, pieceID, diceNum)
 		
 	if((dice[1] == 0)&&( (diceNum == '3')||(diceNum == '2') ))
 		validDice = false;
-		
-	var spaces;	
 		 
+	var spaces;	
+		 debug('m7m');
 	if(diceNum == '3')
 		spaces = dice[0] + dice[1];
 		
@@ -145,29 +144,30 @@ function selectPieceDice(senderID, pieceID, diceNum)
 		
 	else if(diceNum == '1')
 		spaces = dice[0];
-		
-
+		 
 	if(!validDice)
+	{    
 		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  One or more of the dice selected is not available to use');
+	}
 
 	else
-	{
-	 
+	{  
+		
 		if((players[j].pieces[pieceID].locationNum <= 0) && (spaces >= 5))  //if at home base, and rolled atleast 5 
-		{ 
+		{ debug('m1m');
 			enterPiece(senderID, pieceID, diceNum);  //successfail inside that function
 		}
 		
 		else if(players[j].pieces[pieceID].locationNum >= 1)
-		{ 
+		{  debug('m2m');
 			movePiece(senderID, pieceID, spaces, diceNum);  //successfail in that function
 		}
 		
 		else if((players[j].pieces[pieceID].locationNum <= 0) && (spaces < 5))
-		{
+		{  debug('m3m');
 			announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  To enter a piece, you must use dice equal to atleast 5');
 		}
-			 
+			debug('m4m'); 
 	}
 }
 
@@ -181,8 +181,7 @@ function startGame(senderID)
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Game Started');
-		
+		announce_SuccessFail(senderID, 1, 'Game Started'); 
 		vc_playingGame();
 		playingGame = true;
 		waitingForRoll = true;	
@@ -190,7 +189,7 @@ function startGame(senderID)
 		try { announce_RollNeeded(players[currentPlayersTurn].senderID); }catch (e) {  }
 		
 		vc_highlightPlayersTurn(players[currentPlayersTurn].positionNum);
+		announce_gameStarted(); 
 		resetScoreboard();
-		announce_gameStarted();
 	}
 }

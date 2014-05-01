@@ -57,7 +57,8 @@ var cast = window.cast || {};
           this.onRoll(event.senderId);
           break;
         case 'move':
-          selectPieceDice(event.senderId, event.data.data.pieceId, event.data.data.diceNum);
+          selectPieceDice(event.senderId, event.data.data.pieceID, event.data.data.diceNum);
+          break;
         case 'leave':
           this.onLeave(event.senderId);
           break;
@@ -105,9 +106,7 @@ var cast = window.cast || {};
      * COMMUNICATION
      */
 
-    toSender: function(senderId, message){
-    	debug(senderId);
-    	debug(message);
+    toSender: function(senderId, message){ 
       this.messageBus.send(senderId, message);
     },
 
