@@ -1,9 +1,9 @@
 
 //####  OUTGOING ############
 
-function announce_SuccessFail(senderID, _isSuccess, _message)
+function announce_SuccessFail(senderID, _actionType, _isSuccess, _message)
 {   
-	var data = {action:'successFail', isSuccess:_isSuccess, message:_message}; 
+	var data = {action:'successFail', actionType:_actionType, isSuccess:_isSuccess, message:_message}; 
 	Pachisi.toSender(senderID, data);
 } 
 
@@ -44,11 +44,11 @@ function endTurn(senderID)
 	
 	
 	if(currentPlayersTurn != j)
-		announce_SuccessFail(senderID, 0, 'EndTurn failed.  It isnt your turn');
+		announce_SuccessFail(senderID, 'pass', 0, 'EndTurn failed.  It isnt your turn');
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Ended Turn');
+		announce_SuccessFail(senderID, 'pass', 1, 'Ended Turn');
 		removeDice('3');
 		nextPlayersTurn(players[currentPlayersTurn].positionNum);
 	}
@@ -58,17 +58,20 @@ function joinGame(senderID, name, pieceSrc, positionNumber)
 {
  
 	if(playingGame)
-		announce_SuccessFail(senderID, 0, 'JoinGame failed.  Game has started already');
+		announce_SuccessFail(senderID, 'join', 0, 'JoinGame failed.  Game has started already');
 		
 	else if( senderIDexists(senderID) )
-		announce_SuccessFail(senderID, 0, 'JoinGame failed.  Your sender ID is already in the game');
+		announce_SuccessFail(senderID, 'join', 0, 'JoinGame failed.  Your sender ID is already in the game');
 		
 	else if( positionUsed(positionNumber) )
-		announce_SuccessFail(senderID, 0, 'JoinGame failed.  This position is taken already');
+		announce_SuccessFail(senderID, 'join', 0, 'JoinGame failed.  This position is taken already');
 
 	else
 	{ 
-		announce_SuccessFail(senderID, 1, 'Joined Game'); 
+		announce_SuccessFail(senderID, 'join', 1, 'Joined Game'); 
+		
+		if(name == '')
+			name = 'Pachiso ' + positionNumber;
 		
 		players.push(new Player(pieceSrc, positionNumber, dynamicBoardHeight, name, senderID));
 		vc_showPlayerName(name, positionNumber, dynamicBoardHeight);
@@ -78,7 +81,7 @@ function joinGame(senderID, name, pieceSrc, positionNumber)
 function leaveGame(senderID)
 {
 	
-	announce_SuccessFail(senderID, 1, 'Left Game');
+	announce_SuccessFail(senderID, 'leave', 1, 'Left Game');
 	
 	if(players[currentPlayersTurn].senderID == senderID) 
 		endTurn(senderID);	 
@@ -99,14 +102,14 @@ function leaveGame(senderID)
 function rollDice(senderID)
 {
 	if(players[currentPlayersTurn].senderID != senderID)
-		announce_SuccessFail(senderID, 0, 'RollDice fail.  It isnt your turn');
+		announce_SuccessFail(senderID, 'roll', 0, 'RollDice fail.  It isnt your turn');
 		
 	else if(!waitingForRoll)
-		announce_SuccessFail(senderID, 0, 'RollDice fail.  You have already rolled the dice');
+		announce_SuccessFail(senderID, 'roll', 0, 'RollDice fail.  You have already rolled the dice');
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Dice Rolled');
+		announce_SuccessFail(senderID, 'roll', 1, 'Dice Rolled');
 		
 		dice[0] = Math.floor((Math.random()*6 + 1));
 		dice[1] = Math.floor((Math.random()*6 + 1));
@@ -147,7 +150,7 @@ function selectPieceDice(senderID, pieceID, diceNum)
 		 
 	if(!validDice)
 	{    
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  One or more of the dice selected is not available to use');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  One or more of the dice selected is not available to use');
 	}
 
 	else
@@ -165,7 +168,7 @@ function selectPieceDice(senderID, pieceID, diceNum)
 		
 		else if((players[j].pieces[pieceID].locationNum <= 0) && (spaces < 5))
 		{  debug('m3m');
-			announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  To enter a piece, you must use dice equal to atleast 5');
+			announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  To enter a piece, you must use dice equal to atleast 5');
 		}
 			debug('m4m'); 
 	}
@@ -174,14 +177,14 @@ function selectPieceDice(senderID, pieceID, diceNum)
 function startGame(senderID)
 { 
 	if(players.length < 2)
-		announce_SuccessFail(senderID, 0, 'StartGame fail.  Requires atleast 2 players to start');
+		announce_SuccessFail(senderID, 'start', 0, 'StartGame fail.  Requires atleast 2 players to start');
 	
 	else if(playingGame)
-		announce_SuccessFail(senderID, 0, 'StartGame fail.  Game already started');
+		announce_SuccessFail(senderID, 'start', 0, 'StartGame fail.  Game already started');
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Game Started'); 
+		announce_SuccessFail(senderID, 'start', 1, 'Game Started'); 
 		vc_playingGame();
 		playingGame = true;
 		waitingForRoll = true;	

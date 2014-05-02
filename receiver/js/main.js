@@ -62,9 +62,9 @@ var cast = window.cast || {};
         case 'leave':
           this.onLeave(event.senderId);
           break;
-        case 'endTurn':
+        case 'pass':
           this.onEndTurn(event.senderId);
-          break;
+          break; 
         default:
           break;
       }
@@ -73,6 +73,7 @@ var cast = window.cast || {};
     /**
      * GAME FUNCTIONS
      */
+    
 
     onJoin: function(senderId, playerName, pieceImage, Position){
       //this.Players.push({

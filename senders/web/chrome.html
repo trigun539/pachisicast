@@ -66,12 +66,19 @@
   </div>
   
 
+
+
+
   <div id="inGame" class="container-fluid">
     <div class="row">
       <div class="col-md-10">
-      	<button id="leaveGame" class="btn btn-danger">Leave Game</button> 
+      	<button id="leaveGame2" class="btn btn-danger">Leave Game</button> 
       	
       	<div id="gameBox">
+		    <div id="notYourTurn">
+		        <h3>It is not your turn yet</h3>
+		    </div>
+      		
 	      	<div id="rollBox">
 	      		<h3>Your Turn to Roll!</h3>
 	        	<button id="roll" class="btn btn-default">Roll Dice</button> 
@@ -88,6 +95,8 @@
 	        	<input id="piece3" name="piece" type="radio">Piece 4<br/>
 	        	
 	        	<button id="selectPieceDice" class="btn btn-default">Move Piece</button> 
+	        	
+	        	<button id="pass" class="btn btn-default">Pass</button> 
 	        </div>
         </div>
       </div>

@@ -184,20 +184,20 @@ function enterPiece(senderID, pieceNum, diceNum)
 	 debug('777');
 	
 	if(!playingGame)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  Not playing game');
 	
 	else if(currentPlayersTurn != j)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  Not your turn');
 		
 	else if(waitingForRoll)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  You need to roll first');
 		
 	else if( players[j].pieces[pieceNum].locationNum >= 1 )
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  This piece can not be entered into play, it is already in play.');
 	
 	else
 	{ 
-		announce_SuccessFail(senderID, 1, 'Piece entered into play');
+		announce_SuccessFail(senderID, 'selectPieceDice', 1, 'Piece entered into play');
 		
 		players[j].pieces[pieceNum].enterPlayArea();
 		removeDice(diceNum);
@@ -216,26 +216,26 @@ function movePiece(senderID, pieceNum, spaces, diceNum)
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	if(!playingGame)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not playing game');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  Not playing game');
 	
 	else if(currentPlayersTurn != j)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  Not your turn');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  Not your turn');
 		
 	else if(waitingForRoll)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  You need to roll first');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  You need to roll first');
 		
 	else if(!isValidMove(j,pieceNum,spaces) )
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece can not move there');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  This piece can not move there');
 		
 	else if(players[j].pieces[pieceNum].usedThisTurn)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  This piece has already been moved this turn');
 		
 	else if(players[j].pieces[pieceNum].atFinish)
-		announce_SuccessFail(senderID, 0, 'SelectPieceDice fail.  This piece is at the finish and no longer in play');		
+		announce_SuccessFail(senderID, 'selectPieceDice', 0, 'SelectPieceDice fail.  This piece is at the finish and no longer in play');		
 	
 	else
 	{
-		announce_SuccessFail(senderID, 1, 'Piece Moved');
+		announce_SuccessFail(senderID, 'selectPieceDice', 1, 'Piece Moved');
 		
 		releaseBarrier(players[j].pieces[pieceNum].locationNum);
 		players[j].pieces[pieceNum].moveForward(spaces);

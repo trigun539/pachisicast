@@ -1,12 +1,13 @@
 // App object
-var Pachisicast = {}; 
-Pachisicast.actionPending = '';   //the action pending, if empty string, there is no pending action
-
+var Pachisicast = {};  
 
 $(document).ready(function(document){
 
 	Pachisicast.switchView('#intro'); 
 	
+	$('#pass').click(function(e){ 
+		Pachisicast.pass();
+	});
 
 	$('#goToSettings').click(function(e){
 		
@@ -19,8 +20,7 @@ $(document).ready(function(document){
 		var playerPosition = $('#position').val();
 		var images = ['greenpiece.png', 'bluepiece.png', 'redpiece.png', 'yellowpiece.png'];
 		
-		
-		Pachisicast.waitForAction('join'); 
+		 
 		Pachisicast.joinGame(playerName, playerPosition, images[Number(playerPosition) - 1]);
 
 	});
@@ -50,30 +50,27 @@ $(document).ready(function(document){
 			
 		else if( $('#piece3:checked').length > 0)
 			piece = 3;						
-			
-		Pachisicast.waitForAction('selectPieceDice'); 	
+			 	
 		Pachisicast.selectPieceDice(piece,dice);
 	});
 	
 
-	$('#leaveGame').click(function(e){
-		var playerName = $('#name').val();
-		var playerPosition = $('#position').val();
-		var images = ['greenpiece.png', 'bluepiece.png', 'redpiece.png', 'yellowpiece.png'];
-		
-		Pachisicast.leaveGame(playerName, playerPosition, images[Number(playerPosition) - 1]);
-
+	$('#leaveGame').click(function(e){  
+		Pachisicast.leaveGame(); 
 	});
+	
+	$('#leaveGame2').click(function(e){  
+		Pachisicast.leaveGame(); 
+	});	
+	 
 
 	$('#startGame').click(function(e){
-		
-		Pachisicast.waitForAction('start'); 
+		 
 		Pachisicast.startGame();
 	});
 
 	$('#roll').click(function(e){
-		
-		Pachisicast.waitForAction('roll'); 
+		 
 		Pachisicast.rollDice();
 	});
 
@@ -92,7 +89,7 @@ Pachisicast.parseSuccessFail = function(msg)
 	else   //success
 	{
 		
-		switch(Pachisicast.actionPending)
+		switch(msg.actionType)
 		{
 			case 'join':
 				Pachisicast.switchView('#settingsWaiting');
@@ -106,8 +103,14 @@ Pachisicast.parseSuccessFail = function(msg)
 			case 'selectPieceDice':
 				Pachisicast.hideUsedItems();
 				break;
+			case 'pass':
+				Pachisicast.notYourTurn();
+				break;
+			case 'leave':	
+				Pachisicast.switchView('#settings');
+				break;
 			default:
-				console.log('dont recognize' + Pachisicast.actionPending); 
+				console.log('dont recognize ' + msg.actionType); 
 		}
 		
 		
@@ -123,12 +126,22 @@ Pachisicast.parseSuccessFail = function(msg)
 Pachisicast.gameStarted = function(){
 	
 	Pachisicast.switchView('#inGame'); 
+	
 }
 
 
+Pachisicast.notYourTurn = function(){
+	$('#rollBox').css('display','none');
+	$('#rollResultBox').css('display','none');
+	$('#notYourTurn').css('display','block');
+}
+
 Pachisicast.yourTurnToRoll = function(){
-	
+	 
+	Pachisicast.switchView('#inGame');	
 	$('#rollBox').css('display','block');
+	$('#rollResultBox').css('display','none');
+	$('#notYourTurn').css('display','none');
 }
 
 
@@ -138,6 +151,21 @@ Pachisicast.showRollResult = function(msg){
 	$('#rollResultBox').css('display','block');
 	$('#dice1text').html(msg.dice1);
 	$('#dice2text').html(msg.dice2);
+	
+	
+	//resetting the UI for this page
+	$('#dice1').css('display','block');
+	$('#dice2').css('display','block');
+	$('#piece0').css('display','block');
+	$('#piece1').css('display','block');
+	$('#piece2').css('display','block');
+	$('#piece3').css('display','block');
+	$('#dice1').prop('checked', false);
+	$('#dice2').prop('checked', false);
+	$('#piece0').prop('checked', false);
+	$('#piece1').prop('checked', false);
+	$('#piece2').prop('checked', false);
+	$('#piece3').prop('checked', false);
 }
 
 
@@ -150,30 +178,49 @@ Pachisicast.showRollResult = function(msg){
 Pachisicast.hideUsedItems = function()
 {
 	if( $('#dice1:checked').length > 0)
+	{
 		$('#dice1').css('display','none');
+		$('#dice1').prop('checked', false);
+	}
 		
 	if( $('#dice2:checked').length > 0)
+	{
 		$('#dice2').css('display','none');
+		$('#dice2').prop('checked', false);
+	}
 	
 	if( $('#piece0:checked').length > 0)	
+	{
 		$('#piece0').css('display','none');
+		$('#piece0').prop('checked', false);
+	}
 		
 	if( $('#piece1:checked').length > 0)	
+	{
 		$('#piece1').css('display','none');
-		
-	if( $('#piece2:checked').length > 0)	
+		$('#piece1').prop('checked', false);
+	}
+			
+	if( $('#piece2:checked').length > 0)
+	{	
 		$('#piece2').css('display','none');
+		$('#piece2').prop('checked', false);
+	}
 		
 	if( $('#piece3:checked').length > 0)	
-		$('#piece3').css('display','none');				
+	{
+		$('#piece3').css('display','none');	
+		$('#piece3').prop('checked', false);
+	}	
+		
+	if(( $('#dice2').css('display') == 'none') && ($('#dice1').css('display') == 'none'))  //used both dice, end turn
+		Pachisicast.switchView('#notYourTurn');			
 }
 
 
-Pachisicast.waitForAction = function(actionName)
+Pachisicast.showLoader = function()
 {
-	$('#loader').css('display','block');
-	
-	Pachisicast.actionPending = actionName;
+	$('#loader').css('display','block'); 
 }
 
 
@@ -184,6 +231,7 @@ Pachisicast.switchView = function(div)
 	$('#intro').css('display','none');
 	$('#loader').css('display','none');
 	$('#settingsWaiting').css('display','none');
+	$('#notYourTurn').css('display','none');
 	
 	$(div).css('display','block');
 }
@@ -191,10 +239,13 @@ Pachisicast.switchView = function(div)
 
 
 
-
+//###### OUTGOING FUNCTIONS
 
 // Connect to Pachisicast
 Pachisicast.joinGame = function(playerName, playerPosition, playerImg){
+	
+	Pachisicast.showLoader();
+	 
 	sendMessage({
 		action: 'join',
 		data: {
@@ -205,24 +256,37 @@ Pachisicast.joinGame = function(playerName, playerPosition, playerImg){
 	});
 };
 
-Pachisicast.leaveGame = function(playerName, playerPosition, playerImg){
+Pachisicast.pass = function(){
+	
+	Pachisicast.showLoader();
+	
 	sendMessage({
-		action: 'leave',
-		data: {
-			name: playerName,
-			position: playerPosition,
-			img: playerImg
-		}
+		action: 'pass'
+	});
+}
+
+Pachisicast.leaveGame = function(){
+	
+	Pachisicast.showLoader();
+	
+	sendMessage({
+		action: 'leave', 
 	});
 }
 
 Pachisicast.startGame = function(){
+	
+	Pachisicast.showLoader();
+	
 	sendMessage({
 		action: 'start'
 	});
 };
 
 Pachisicast.selectPieceDice = function(pieceID, diceNum){
+	
+	Pachisicast.showLoader();
+	
 	sendMessage({
 		action: 'move',
 		data: {
@@ -233,15 +297,14 @@ Pachisicast.selectPieceDice = function(pieceID, diceNum){
 };
 
 Pachisicast.rollDice = function(){
+	
+	Pachisicast.showLoader();
+	
 	sendMessage({
 		action: 'roll'
 	});
 };
-
-Pachisicast.myTurn = function(){
-	console.log("It's my turn!");
-}
-
+ 
 
 
 // announce_RollNeeded(senderID);
