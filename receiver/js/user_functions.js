@@ -83,17 +83,18 @@ function leaveGame(senderID)
 	
 	announce_SuccessFail(senderID, 'leave', 1, 'Left Game');
 	
-	if(players[currentPlayersTurn].senderID == senderID) 
-		endTurn(senderID);	 
+	if(currentPlayersTurn)
+		if(players[currentPlayersTurn].senderID == senderID) 
+			endTurn(senderID);	 
 		
 	 
 	var splicer = getPlayerIDFromSenderID(senderID);
 	
-	
 	vc_hidePlayerName(players[splicer].positionNum);
-	
+
 	players[splicer].killme();   //remove the pieces from board;
 	players.splice(splicer, 1); 
+
 	
 	if(currentPlayersTurn == players.length)
 		currentPlayersTurn--;     //-----###bandaid fix, may improve later
@@ -125,6 +126,8 @@ function rollDice(senderID)
 
 function selectPieceDice(senderID, pieceID, diceNum)
 {	  
+	 
+ 
 	var j = getPlayerIDFromSenderID(senderID);
 	
 	

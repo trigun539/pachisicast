@@ -309,7 +309,7 @@ function isValidMove(playerID, pieceNum, spaces)
 	return returner;
 }
 
-function isBarrierHere(locationNum)  //returns the ID of the player at this location [if any], otherwise false
+function isBarrierHere(locationNum)  
 {
 	var returner = false; 
 	

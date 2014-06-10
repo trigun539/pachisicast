@@ -27,7 +27,8 @@ $(document).ready(function(document){
 	
 	$('#selectPieceDice').click(function(e){
 		 
-		var dice, piece; 
+		var dice, piece, valid;
+		var valid = true; 
 		 
 		if(( $('#dice1:checked').length > 0) && ($('#dice2:checked').length > 0 ))
 			dice = '3';
@@ -37,7 +38,10 @@ $(document).ready(function(document){
 			
 		else if($('#dice2:checked').length > 0) 
 			dice = '2';
-			
+
+		else
+			valid = false;
+
 		
 		if( $('#piece0:checked').length > 0)
 			piece = 0;
@@ -49,9 +53,17 @@ $(document).ready(function(document){
 			piece = 2;
 			
 		else if( $('#piece3:checked').length > 0)
-			piece = 3;						
-			 	
-		Pachisicast.selectPieceDice(piece,dice);
+			piece = 3;		
+	
+		else
+			valid = false;
+
+						
+		if(valid)	 	
+			Pachisicast.selectPieceDice(piece,dice);
+
+		else
+			alert('invalid inputs');
 	});
 	
 
@@ -125,30 +137,27 @@ Pachisicast.parseSuccessFail = function(msg)
 
 Pachisicast.gameStarted = function(){
 	
-	Pachisicast.switchView('#inGame'); 
+	if($('#rollBox').css('display') != 'block')   //if ROLL trigger hit before this one, ignore this one
+		Pachisicast.switchView('#notYourTurn'); 
 	
 }
 
 
 Pachisicast.notYourTurn = function(){
-	$('#rollBox').css('display','none');
-	$('#rollResultBox').css('display','none');
-	$('#notYourTurn').css('display','block');
+	Pachisicast.switchView('#notYourTurn'); 
 }
 
 Pachisicast.yourTurnToRoll = function(){
-	 
-	Pachisicast.switchView('#inGame');	
-	$('#rollBox').css('display','block');
-	$('#rollResultBox').css('display','none');
-	$('#notYourTurn').css('display','none');
+	  
+	Pachisicast.switchView('#rollBox'); 
 }
 
 
 Pachisicast.showRollResult = function(msg){
 	
-	$('#rollBox').css('display','none');
-	$('#rollResultBox').css('display','block');
+	
+	Pachisicast.switchView('#rollResultBox'); 
+	
 	$('#dice1text').html(msg.dice1);
 	$('#dice2text').html(msg.dice2);
 	
@@ -231,9 +240,17 @@ Pachisicast.switchView = function(div)
 	$('#intro').css('display','none');
 	$('#loader').css('display','none');
 	$('#settingsWaiting').css('display','none');
-	$('#notYourTurn').css('display','none');
+	
+	$('#notYourTurn').css('display','none'); 
+	$('#rollBox').css('display','none');
+	$('#rollResultBox').css('display','none');
 	
 	$(div).css('display','block');
+	
+	if((div == '#notYourTurn')||(div == '#rollBox')||(div == '#rollResultBox'))
+		$('#inGame').css('display','block');
+		
+	
 }
 
 

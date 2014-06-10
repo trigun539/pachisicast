@@ -54,31 +54,31 @@ function Player(PieceSrc, PositionNumber, BoardHeight, PlayerName, SenderID) {
 	{
 		if(this.positionNum == 1)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 0, this.positionNum, BoardHeight);
-			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 1, this.positionNum, BoardHeight);
-			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 2, this.positionNum, BoardHeight);
-			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 3, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc.replace(".png", "1.png"), -3, 0, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc.replace(".png", "2.png"), -2, 1, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc.replace(".png", "3.png"), -1, 2, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc.replace(".png", "4.png"), 0, 3, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 2)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 0, this.positionNum, BoardHeight);
-			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 1, this.positionNum, BoardHeight);
-			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 2, this.positionNum, BoardHeight);
-			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 3, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc.replace(".png", "1.png"), -3, 0, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc.replace(".png", "2.png"), -2, 1, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc.replace(".png", "3.png"), -1, 2, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc.replace(".png", "4.png"), 0, 3, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 3)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 0, this.positionNum, BoardHeight);
-			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 1, this.positionNum, BoardHeight);
-			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 2, this.positionNum, BoardHeight);
-			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 3, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc.replace(".png", "1.png"), -3, 0, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc.replace(".png", "2.png"), -2, 1, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc.replace(".png", "3.png"), -1, 2, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc.replace(".png", "4.png"), 0, 3, this.positionNum, BoardHeight);
 		}
 		else if(this.positionNum == 4)
 		{
-			this.pieces[0] = new GamePiece(this.pieceSrc, -3, 0, this.positionNum, BoardHeight);
-			this.pieces[1] = new GamePiece(this.pieceSrc, -2, 1, this.positionNum, BoardHeight);
-			this.pieces[2] = new GamePiece(this.pieceSrc, -1, 2, this.positionNum, BoardHeight);
-			this.pieces[3] = new GamePiece(this.pieceSrc, 0, 3, this.positionNum, BoardHeight);
+			this.pieces[0] = new GamePiece(this.pieceSrc.replace(".png", "1.png"), -3, 0, this.positionNum, BoardHeight);
+			this.pieces[1] = new GamePiece(this.pieceSrc.replace(".png", "2.png"), -2, 1, this.positionNum, BoardHeight);
+			this.pieces[2] = new GamePiece(this.pieceSrc.replace(".png", "3.png"), -1, 2, this.positionNum, BoardHeight);
+			this.pieces[3] = new GamePiece(this.pieceSrc.replace(".png", "4.png"), 0, 3, this.positionNum, BoardHeight);
 		}
 		
 	}
